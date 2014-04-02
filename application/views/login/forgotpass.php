@@ -11,7 +11,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Dashboard Admin</title>
+	<title>Forgot Password</title>
 	
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -43,24 +43,26 @@
 	<div class="content clearfix">
 		
 		<!--form action="process.php" method="post"-->
-		<form action="<?php echo URL; ?>login/login" method="post">
+		<form action="<?php echo URL; ?>login/procForgotPass" method="post">
 		
-			<h1>Sign In</h1>		
+			<h1>Forgot Password</h1>
 			
 			<div class="login-fields">
 				
-				<p>Sign in using your registered account:</p>
+				<p>
+					A new password will be generated for you and sent to the email address associated with your account, all you have to do is enter your username.
+				</p>
 				
+				<?php echo $form->error("username"); ?>
 				<div class="field">
 					<label for="username">Username:</label>
-					<input type="text" id="username" name="username" value="<?php echo $form->value("username"); ?>" placeholder="Username" class="login username-field" required />
-					<?php echo $form->error("username"); ?>
+					<input type="text" id="username" name="username" maxlength="30" value="<?php echo $form->value("username"); ?>" placeholder="Username" class="login username-field" required />
 				</div> <!-- /field -->
 				
-				<div class="field">
+				<!--div class="field">
 					<label for="password">Password:</label>
 					<input type="password" id="password" name="password" value="<?php echo $form->value("password"); ?>" placeholder="Password" class="login password-field" required />
-					<?php echo $form->error("password"); ?>
+					<?php //echo //$form->error("password"); ?>
 				</div> <!-- /password -->
 				
 			</div> <!-- /login-fields -->
@@ -73,16 +75,16 @@
 				</span-->
 									
 				<!--button class="button btn btn-primary btn-large">Sign In</button-->
-				<input type="hidden" name="sublogin" value="1">
+				<input type="hidden" name="subforgot" value="1">
 				
 				<div class="btn-login">
-					<button class="btn-secondary btn-login2">Sign In</button>
+					<button class="btn-secondary btn-login2">Get New Password</button>
 				</div>
 				
-				<span class="login-checkbox">
+				<!--span class="login-checkbox">
 					<input id="Field" name="remember" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" <?php if($form->value("remember") != ""){ echo "checked"; } ?>/>
 					<label class="choice" for="Field">Keep me signed in</label>
-				</span>
+				</span-->
 			</div> <!-- .actions -->
 			
 			<!--div class="login-social">
@@ -100,6 +102,7 @@
 				</div>
 			</div-->
 			
+			<a href="<?php echo URL; ?>">Back to Main</a>
 		</form>
 		
 	</div> <!-- /content -->
@@ -108,20 +111,20 @@
 
 
 <!-- Text Under Box -->
-<div class="login-extra">
-	<a href="<?php echo URL; ?>login/forgotPass">Forgot Password?</a>
+<!--div class="login-extra">
+	<a href="<?php //echo URL; ?>login/forgotpass">Forgot Password?</a>
 </div> <!-- /login-extra -->
 
 
 
 
-<script src="<?php echo THEME; ?>js/libs/jquery-1.7.2.min.js"></script>
+<!--script src="<?php echo THEME; ?>js/libs/jquery-1.7.2.min.js"></script>
 <script src="<?php echo THEME; ?>js/libs/jquery-ui-1.8.21.custom.min.js"></script>
 <script src="<?php echo THEME; ?>js/libs/jquery.ui.touch-punch.min.js"></script>
 
 <script src="<?php echo THEME; ?>js/libs/bootstrap/bootstrap.min.js"></script>
 
-<script src="<?php echo THEME; ?>js/signin.js"></script>
+<script src="<?php echo THEME; ?>js/signin.js"></script-->
 
 </body>
 </html>

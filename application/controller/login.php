@@ -44,7 +44,7 @@ class Login extends Controller{
 			}
 			// user not an administrator, redirect to client page
 			else if($session->isAgent()){
-				header('Location: '.URL.'clients/index');
+				header('Location: '.URL.'dashboard/index');
 			}
 			else{
 				header('Location: '.URL);
@@ -99,15 +99,33 @@ class Login extends Controller{
 			header('Location: '.URL.'login/signup');
 		}
 	}
+	
+	/**
+	* PAGE: signup
+	* This method shows the forgot password form
+	*/
+	public function forgotPass(){
+		// load views
+		//require 'application/views/_templates/header.php';
+		require 'application/views/login/forgotpass.php';
+		//require 'application/views/_templates/footer.php';
+	}
+	
+	/**
+	* Process forgot password
+	*/
+	public function procForgotPass(){
+		// load the login-model
+		$login_model = $this->loadModel('LoginModel');
+		
+		// perform the procForgotPass() method of the login-model
+		$result = $login_model->procForgotPass();
+		
+		if($result == "true"){
+			header('Location: '.URL.'login/index');
+		}else{
+			header('Location: '.URL.'login/forgotPass');
+		}
+	}
 }
 		
-		
-		
-		
-		
-		
-		
-		
-	
-	
-	

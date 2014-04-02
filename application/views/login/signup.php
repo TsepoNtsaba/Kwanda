@@ -135,6 +135,13 @@
 					<input type="password" id="confirm_password" name="confirm_pass" placeholder="Confirm Password" class="login"  value="<?php echo $form->value("confirm_pass"); ?>" /> <?php echo $form->error("confirm_pass"); ?>
 				</div> <!-- /field -->
 				
+				<div class="field">
+					<label for="user_level">User Level:</label>
+					<select id="user_level" name="user_level">
+						<option value="<?php echo MASTER_LEVEL; ?>" >Employee</option><option value="<?php echo AGENT_LEVEL; ?>" >Client</option>
+					</select>
+				</div> <!-- /field -->
+				
 			</div> <!-- /login-fields -->
 			
 			<div class="login-actions">

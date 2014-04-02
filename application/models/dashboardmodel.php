@@ -157,8 +157,8 @@ class DashboardModel{
 				$parent = $_POST['group'];
 			//}
 			
-			$q = "INSERT INTO ".TBL_BANNED_USERS." (uid, username, password, userid, userlevel, email, timestamp, parent_directory) 
-				VALUES ($uid, '$uname', '$upass', '$userid', $ulevel, '$email', $session->time, '$parent') ;";
+			$q = "INSERT INTO ".TBL_BANNED_USERS." (uid, username, password, userid, userlevel, email, parent_directory) 
+				VALUES ($uid, '$uname', '$upass', '$userid', $ulevel, '$email', '$parent') ;";
 			
 			if(!$database->query($q))
 				return json_encode(Array("response" => "false", "msg" => "System was unable to ban user #ban"));
@@ -222,8 +222,8 @@ class DashboardModel{
 				$parent = $_POST['group'];
 			//}
 			
-			$q = "INSERT INTO ".TBL_USERS." (uid, username, password, userid, userlevel, email, timestamp, parent_directory) 
-				VALUES ($uid, '$uname', '$upass', '$userid', $ulevel, '$email', $session->time, '$parent') ;";
+			$q = "INSERT INTO ".TBL_USERS." (uid, username, password, userid, userlevel, email, parent_directory) 
+				VALUES ($uid, '$uname', '$upass', '$userid', $ulevel, '$email', '$parent') ;";
 			
 			if(!$database->query($q))
 				return json_encode(Array("response" => "false", "msg" => "System was unable to activate user #activate"));

@@ -122,7 +122,7 @@ class Session{
 		global $database, $form;  //The database and form object
 
 		/* Username error checking */
-		$field = "user";  //Use field name for username
+		$field = "username";  //Use field name for username
 		if(!$subuser || strlen($subuser = trim($subuser)) == 0){
 			$form->setError($field, "* Username not entered");
 		}else{
@@ -133,7 +133,7 @@ class Session{
 		}
 
 		/* Password error checking */
-		$field = "pass";  //Use field name for password
+		$field = "password";  //Use field name for password
 		if(!$subpass){
 			$form->setError($field, "* Password not entered");
 		}
@@ -149,10 +149,10 @@ class Session{
 
 		/* Check error codes */
 		if($result == 1){
-			$field = "user";
+			$field = "username";
 			$form->setError($field, "* Username not found");
 		}else if($result == 2){
-			$field = "pass";
+			$field = "password";
 			$form->setError($field, "* Invalid password");
 		}
       
@@ -722,7 +722,7 @@ class Session{
 	* @param meta-data info
 	* @return upload result;
 	*/
-	function uploadMetaData($client, $article_id, $publication_date, $media_type, $headline, $author, $circulation, $eav, $reach, $article_text, $file_url){
+	function uploadMetaData($client, $article_id, $publication_date, $media_type, $headline, $author, $circulation, $eav, $reach, $article_text, $file_url, $media_name = NULL, $show_name = NULL, $start_time = NULL, $duration = NULL){
 		global $database, $form, $mailer;  //The database, form and mailer object
 	      
 		/* Clientname error checking */
@@ -765,6 +765,11 @@ class Session{
 			$media_type = stripslashes($media_type);
 		}
 		
+		/* Media Type error checking */
+		if($media_name)
+			$media_name = stripslashes($media_name);
+		//}
+		
 		/* Headline error checking */
 		$field = "headline";  //Use field name for Headline
 		if(!$headline || strlen($headline = trim($headline)) == 0){
@@ -805,6 +810,15 @@ class Session{
 			$reach = stripslashes($reach);
 		}
 		
+		if($show_name)
+			$show_name = stripslashes($show_name);
+			
+		if($start_time)
+			$start_time = stripslashes($start_time);
+		
+		if($duration)
+			$duration = stripslashes($duration);
+			
 		/* Article Text error checking */
 		$field = "articletext";  //Use field name for Article Text
 		if(!$article_text || strlen($article_text = trim($article_text)) == 0){
@@ -819,7 +833,7 @@ class Session{
 		}
 		/* No errors, add the meta-data to the database*/
 		else{
-			if($database->addMetaData($client, $article_id, $publication_date, $media_type, $headline, $author, $circulation, $eav, $reach, $article_text, $file_url)){
+			if($database->addMetaData($client, $article_id, $publication_date, $media_type, $media_name = NULL, $headline, $author, $circulation, $eav, $reach, $show_name, $start_time, $duration, $article_text, $file_url)){
 				if(EMAIL_WELCOME){
 					$mailer->sendWelcome($subuser,$subemail,$subpass);
 				}

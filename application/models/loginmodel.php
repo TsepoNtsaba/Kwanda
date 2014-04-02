@@ -25,7 +25,7 @@ class LoginModel{
 		global $session, $form;
 		/* Login attempt */
 		$retval = $session->login($_POST['username'], $_POST['password'], isset($_POST['remember']));
-      
+		
 		/* Login successful */
 		if($retval){
 			//header("Location: ./index.php");
@@ -69,7 +69,7 @@ class LoginModel{
 		}
 		
 		/* Registration attempt */
-		$retval = $session->register($_POST['user'], $_POST['pass'], $_POST['email']);
+		$retval = $session->register($_POST['user'], $_POST['pass'], $_POST['email'], $_POST['user_level']);
 		
 		/* Registration Successful */
 		if($retval == 0){
@@ -95,6 +95,57 @@ class LoginModel{
 		}
 		
 		return false;
+	}
+	
+	/**
+	* procForgotPass - Validates the given username then if
+	* everything is fine, a new password is generated and
+	* emailed to the address the user gave on sign up.
+	*/
+	public function procForgotPass(){
+		global $database, $session, $mailer, $form;
+		
+		/* Username error checking */
+		$subuser = $_POST['username'];
+		$field = "username";  //Use field name for username
+		if(!$subuser || strlen($subuser = trim($subuser)) == 0){
+			$form->setError($field, "* Username not entered<br>");
+		}else{
+			/* Make sure username is in database */
+			$subuser = stripslashes($subuser);
+			if(strlen($subuser) < 5 || strlen($subuser) > 30 || !preg_match("/^([0-9a-z])+$/", $subuser) || (!$database->usernameTaken($subuser))){
+				$form->setError($field, "* Username does not exist<br>");
+			}
+		}
+      
+		/* Errors exist, have user correct them */
+		if($form->num_errors > 0){
+			$_SESSION['value_array'] = $_POST;
+			$_SESSION['error_array'] = $form->getErrorArray();
+			return false;
+		}
+		/* Generate new password and email it to user */
+		else{
+			/* Generate new password */
+			$newpass = $session->generateRandStr(8);
+         
+			/* Get email of user */
+			$userinfo = $database->getUserInfo($subuser);
+			$email  = $userinfo['email'];
+			
+			/* Attempt to send the email with new password */
+			if($mailer->sendNewPass($subuser,$email,$newpass)){
+				/* Email sent, update database */
+				$database->updateUserField($subuser, "password", md5($newpass));
+				$_SESSION['forgotpass'] = true;
+				return true;
+			}
+			/* Email failure, do not change password */
+			else{
+				$_SESSION['forgotpass'] = false;
+				return false;
+			}
+		}
 	}
 }
 	

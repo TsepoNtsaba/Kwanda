@@ -1,3 +1,7 @@
+<style>
+	#bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+	#percent { position:relative; display:inline-block; top:3px; left:48%; }
+</style>
 <?php
 /**
  * print.php
@@ -84,95 +88,9 @@ global $session, $form;
 	<script src="<?php echo THEME; ?>js/libs/jquery.ui.touch-punch.min.js"></script>
 
 	<script src="<?php echo THEME; ?>js/libs/bootstrap/bootstrap.min.js"></script>
-	<!--style>
-		.inputLabel
-		{
-			text-align: right;
-		}
-		.inputHolder
-		{
-			text-align: left;
-		}
-	</style-->
+	
 	<script src="<?php echo THEME; ?>js/Theme.js"></script>
-	<!--script>
-		//This function turns form data into a json object
-		$.fn.serializeObject = function()
-		{
-		    var o = {};
-		    var a = this.serializeArray();
-		    $.each(a, function() {
-			if (o[this.name] !== undefined) {
-			    if (!o[this.name].push) {
-				o[this.name] = [o[this.name]];
-			    }
-			    o[this.name].push(this.value || '');
-			} else {
-			    o[this.name] = this.value || '';
-			}
-		    });
-		    return o;
-		};
-		
-		$(function() {
-		    $('#myForm').submit(function(e) {
-			str=document.getElementById('file').value;
-			alert("Form Submitted: " + str); 
-			
-			$("#loadingImage").show(); 
-			
-			str=document.getElementById('file').value.toUpperCase();
-			if(!str || str == ''){
-				alert("Please select a file before you proceed to upload");
-				return false;
-			}
-			//return true;
-			
-			var obj = $("#myForm").serializeObject();
-			alert(obj.file);
-			
-			var form = $(this);
-			var fd = new FormData();
-			fd.append("file", $("#file")[0].files[0]);
-			$.ajax({
-			    type: form.attr("method"),
-			    url: form.attr("action"),
-			    data: fd,
-			    processData: false,
-			    contentType: false,
-			    cache: false,
-			    success: function(result){
-				alert("Form Success: "+result.response);
-				if(result.response == "unsuccessful")
-					return true;
-				$.msgbox('The file(s) have been successfully uploaded. To continue to the analysis process, click continue.', {
-				  type : 'info',
-				  buttons : [
-				    {type: 'submit', value:'<< Back'},
-				    {type: 'submit', value:'Continue >>'}
-				  ]
-				}, function(buttonPressed) {
-					if(buttonPressed == '<< Back')
-					{
-					}
-					else if(buttonPressed == 'Continue >>')
-					{
-						window.location.href = "../charts.php";
-					}
-					
-				});
-			    },
-			    error:function(error){
-				alert("Upload Error: "+ error.error);
-				//return true;
-			    }
-			});
-			e.preventDefault();
-			//return false;
-			
-		    });
-		});
-	</script-->
+	
 	<script type="text/javascript">
 		function check_file(){
 			//Image file formats
@@ -218,7 +136,7 @@ global $session, $form;
 	<script>
 		//Uploader Form uploading script
 		$(document).ready(function(){
-			var options = { 
+			var options = {
 				beforeSend: function(){
 					$("#progress").show();
 					//clear everything
@@ -233,12 +151,15 @@ global $session, $form;
 					$("#percent").html('100%');
 				}, complete: function(response){
 					$("#message").html("<font color='green'>"+response.responseText+"</font>");
+					setTimeout(function(){
+						window.location.href = "<?php echo URL; ?>dashboard/upload";
+					}, 1000);
 				}, error: function(){
 					$("#message").html("<font color='red'> ERROR: unable to upload files</font>");
 				}
 			}; 
 
-			//$("#myForm").ajaxForm(options);
+			$("#myForm").ajaxForm(options);
 		});
 
 	</script>

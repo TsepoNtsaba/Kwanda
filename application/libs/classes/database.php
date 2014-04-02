@@ -319,9 +319,9 @@ class MySQLDB{
 	* @param - metadata info
 	* @return query result
 	*/
-	function addMetaData($client, $article_id, $publication_date, $media_type, $headline, $author, $circulation, $eav, $reach, $article_text, $file_url){
-		$q = "INSERT INTO meta_data (client, articleid, publicationdate, mediatype, headline, author, circulation, eav, reach, articletext, fileurl) 
-			VALUES ('$client', '$article_id', '$publication_date', '$media_type', '$headline', '$author', '$circulation', '$eav', '$reach', '$article_text', '$file_url') ;";
+	function addMetaData($client, $article_id, $publication_date, $media_type, $media_name = NULL, $headline, $author, $circulation, $eav, $reach, $show_name, $start_time, $duration, $article_text, $file_url){
+		$q = "INSERT INTO meta_data (client, articleid, publicationdate, mediatype, medianame, headline, author, circulation, eav, reach, showname, starttime, duration, articletext, fileurl) 
+			VALUES ('$client', '$article_id', '$publication_date', '$media_type', '$media_name', '$headline', '$author', '$circulation', '$eav', '$reach', '$show_name', '$start_time', '$duration', '$article_text', '$file_url') ;";
 			
 		return mysql_query($q, $this->connection); 
 	}

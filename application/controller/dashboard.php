@@ -11,9 +11,10 @@ class Dashboard extends Controller{
 	*/
 	public function index(){
 		// load views.
-		require 'application/views/_templates/header.php';
+		/*require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/index.php';
-		require 'application/views/_templates/footer.php';
+		require 'application/views/_templates/footer.php';*/
+		$this->upload();
 	}
 	
 	/**
@@ -125,68 +126,63 @@ class Dashboard extends Controller{
 	* Settings page to edit user details
 	*/
 	public function settings(){
-		// check whether user is an admin or not
-		global $session;
-		/**
-		* User not an administrator, redirect to main page
-		* automatically.
-		*/
-		if(!$session->isAdmin()){
-			header('Location: '.URL);
-		}
-		
-		// else load views
+		// load views
 		require 'application/views/_templates/header.php';
 		require 'application/views/_templates/settings.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function upload()
-	{
+	/**
+	* PAGE: skins
+	* Allows the users to choose their preferred theme
+	*/
+	public function skins(){
+		// load views
+		require 'application/views/_templates/header.php';
+		require 'application/views/dashboard/skins.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
+	public function upload(){
 		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/upload.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function _print()
-	{
+	public function _print(){
 		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/print.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function sound()
-	{
+	public function sound(){
 		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/sound.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function video()
-	{
+	public function video(){
 		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/video.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function uploadPrint()
-	{
+	public function uploadPrint(){
 		// run the uploadPrint() method in the login-model
 		$upload_model = $this->loadModel('UploadModel');
 		// perform the login method and put result into $upload_successful
 		$upload_successful = $upload_model->uploadPrint();
 		
-		// if file and it's meta-data were uploaded successfully
-		if($upload_successful){
-			header('Location: '.URL.'dashboard/upload');
-			//$arr["response"] = $upload_successful;
-			//echo json_encode($arr);
-		}else{
-			// show user form again
-			//header('Location: '.URL.'login/index');
-			header('Location: '.URL.'dashboard/_print');
-			//$arr["response"] = $upload_successful;
-			//echo json_encode($arr);
-		}
+		echo $upload_successful;
+	}
+	
+	public function uploadSound()
+	{
+		// run the uploadSound() method in the login-model
+		$upload_model = $this->loadModel('UploadModel');
+		// perform the login method and put result into $upload_successful
+		$upload_successful = $upload_model->uploadSound();
+		
+		echo $upload_successful;
 	}
 }

@@ -18,8 +18,8 @@ ini_set("display_errors", 1);
  * Configuration for: Project URL
  * Put your URL here, for local development "127.0.0.1" or "localhost" (plus sub-folder) is fine
  */
-define('URL', 'http://localhost/mvc/');
-define('UPLOAD', '/var/www/mvc/public/clientuploads/');
+define('URL', 'http://localhost/kwanda/');
+define('UPLOAD', '/var/www/kwanda/public/clientuploads/');
 
 /**
  * Configuration for: Database
@@ -34,5 +34,5 @@ define('DB_PASS', 'zieshumu');
 /**
 * Configuration for: Dashboard theme
 */
-define('THEME', 'http://localhost/mvc/public/theme/');
-define('RESOURCES', 'http://localhost/mvc/public/');
+define('THEME', 'http://localhost/kwanda/public/theme/');
+define('RESOURCES', 'http://localhost/kwanda/public/');
