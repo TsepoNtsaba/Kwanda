@@ -71,7 +71,7 @@ function displayUsers(){
 				<td><a class='del btn btn-small btn-secondary' id='$uname' href='".URL."dashboard/deleteUser'><span>delete</span></a></td><td><a class='ban btn btn-small btn-secondary' id='$uid' href=''><span>ban</span></a></td><td><a class='edit btn btn-small btn-secondary' href=''><span>edit</span></a><a class='save btn btn-small btn-secondary' href='' style='display: none' ><span>save</span></a></td>
 			</tr>";
 	}
-	echo "</tbody><br>";
+	echo "</tbody><br>KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK";
 }
 
 /**
