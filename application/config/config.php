@@ -20,6 +20,7 @@ ini_set("display_errors", 1);
  */
 define('URL', 'http://localhost/kwanda/');
 define('UPLOAD', '/var/www/kwanda/public/clientuploads/');
+define('MONITOR','http://localhost/kwanda/application/libs/monitor/');
 
 /**
  * Configuration for: Database

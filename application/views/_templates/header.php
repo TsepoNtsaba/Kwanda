@@ -60,45 +60,6 @@
 				</a>
 	
 				<div id="top-nav">
-					<!--ul>
-						<!--li class="dropdown">
-							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-								KDashboard			
-								<b class="caret"></b>
-							</a>
-					
-							<ul class="dropdown-menu pull-right">
-								<li><a href="admin.php">Clients</a></li>
-								<!--li><a href="javascript:;">View Site #2</a></li-->
-								<!--li class="dropdown-submenu">
-									<a tabindex="-1" href="#">Management & Analysis</a>
-									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="./reports.html">Generate Report</a></li>
-										<li><a tabindex="-1" href="./charts.html">Analysis</a></li>
-										<!--li><a tabindex="-1" href="#">Second level link</a></li-->
-										<!--li class="dropdown-submenu">
-											<a tabindex="-1" href="#">Upload</a>
-											<ul class="dropdown-menu">
-												<li><a tabindex="-1" href="#">Print Clip</a></li>
-												<li><a tabindex="-1" href="#">TV Broadcast</a></li>
-												<li><a tabindex="-1" href="#">Radio Broadcast</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-						
-								<li class="dropdown-submenu">
-									<a tabindex="-1" href="#">Monitor</a>
-									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="#">Blogs</a></li>
-										<li><a tabindex="-1" href="#">News</a></li>
-										<li><a tabindex="-1" href="#">Videos</a></li>
-										<li><a tabindex="-1" href="#">Social Search</a></li>
-									</ul>
-								</li>
-							</ul> 
-						</li>
-					</ul-->
 			
 					<ul class="pull-right">
 						<li><a href="javascript:;"><i class="icon-user"></i><?php echo ' '.$session->username; ?></a></li><!--Username is collected from session and database -->
@@ -115,13 +76,6 @@
 								<li><a href="./faq.html">FAQ</a></li>
 								<li><a href="javascript:;">Contact Us</a></li>
 								<li><a href="javascript:;">About Us</a></li>
-								<!--li class="dropdown-submenu">
-									<!--a tabindex="-1" href="#">Dropdown menu</a>
-									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="#">Second level link</a></li>
-										<li><a tabindex="-1" href="#">Second level link</a></li>
-										<li><a tabindex="-1" href="#">Second level link</a></li>
-									</ul-->
 								</li>
 							</ul> 
 						</li>
@@ -172,20 +126,12 @@
 							</li>
 						<?php } ?>
 						
-						<!--li class="dropdown">
-							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-								<i class="icon-th"></i>
+						<li id="monitor">					
+							<a href="<?php echo URL; ?>dashboard/monitor">
+								<i class="icon-search"></i>
 								<span>Monitor</span> 
-								<b class="caret"></b>
 							</a>
-							
-							<ul class="dropdown-menu">
-								<li><a href="#">Blogs</a></li>
-								<li><a href="#">News</a></li>
-								<li><a href="#">Videos</a></li>
-								<li><a href="#">Social Search</a></li>
-							</ul>    				
-						</li-->
+						</li>
 				
 				
 						<!--li class="dropdown">					

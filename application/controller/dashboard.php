@@ -39,6 +39,17 @@ class Dashboard extends Controller{
 	}
 	
 	/**
+	*Page:monitor
+	*Monitor social networks and search the webcrawler
+	*/
+	public function monitor(){
+	
+		require 'application/views/_templates/header.php';
+		require 'application/views/dashboard/monitor.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
+	/**
 	* Edit user account action
 	*/
 	public function editUserAccount(){

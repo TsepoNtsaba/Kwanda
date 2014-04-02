@@ -21,6 +21,10 @@ require 'application/config/config.php';
 // load application session
 require 'application/libs/classes/session.php';
 
+require 'application/libs/monitor/config.php';
+require 'application/libs/monitor/lib/TwitterSentimentAnalysis.php';
+require 'application/libs/monitor/lib/FacebookSentimentAnalysis.php';
+
 // load application class
 require 'application/libs/application.php';
 require 'application/libs/controller.php';
