@@ -1,6 +1,6 @@
 <style>
-	#bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
-	#percent { position:relative; display:inline-block; top:3px; left:48%; }
+	#broadcastBar, pressBar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+	#broadcastPercent, #pressPercent { position:relative; display:inline-block; top:3px; left:48%; }
 </style>
 <?php
 /**
@@ -19,10 +19,46 @@
  */
 global $session, $form;
 
+
 /**
- * displayUsers - Displays the users database table in
- * a nicely formatted html table.
+ * displayClients - Displays the clients in
+ * a nicely formatted drop-down list.
  */
+ function displayClients(){
+	global $database;
+	$q = "SELECT * "
+		."FROM ".TBL_USERS." WHERE userlevel = 1 ORDER BY userlevel DESC,username";
+	
+	$result = $database->query($q);
+	/* Error occurred, return given name by default */
+	$num_rows = mysql_numrows($result);
+	if(!$result || ($num_rows < 0)){
+		echo "Error displaying info";
+		return;
+	}
+	if($num_rows == 0){
+		echo "Database table empty";
+		return;
+	}
+	/* Display table contents */
+	//echo "<table align=\"left\" border=\"1\" cellspacing=\"0\" cellpadding=\"3\">\n";
+	//echo "<table class='table table-bordered table-striped table-highlight'>";
+	//echo "<thead><tr><th>Username</th><th>Level</th><th>Email</th><th>Group</th><th/><th/><th/></tr></thead>";
+	//echo "<tbody>";
+	for($i=0; $i<$num_rows; $i++){
+		$uid  = mysql_result($result,$i,"uid");
+		$uname  = mysql_result($result,$i,"username");
+		$upass = mysql_result($result, $i, "password");
+		$userid = mysql_result($result, $i, "userid");
+		$ulevel = mysql_result($result,$i,"userlevel");
+		$email  = mysql_result($result,$i,"email");
+		$time   = mysql_result($result,$i,"timestamp");
+		$parent = mysql_result($result,$i,"parent_directory");
+
+		echo "<option class='clients'>$uname</option>";
+	}
+	//echo "</tbody><br>";
+}
 ?>
 	
 		<div id="masthead">
@@ -58,7 +94,13 @@ global $session, $form;
 										<form id="pressForm" action='<?php echo URL; ?>dashboard/uploadPress' method="post" enctype="multipart/form-data">
 											<div class="login-fields">
 												<table class="">
-													<tr class="detail"><td class="inputLabel">Select Client:</td><td class="inputHolder"><select style="width:323px;" id="client" name="client" value="<?php echo $form->value("client"); ?>" required ><option>ABSA</option><option>FNB</option></select><?php echo $form->error("client"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">Select Client:</td><td class="inputHolder">
+														<select style="width:323px;" id="client" name="client" value="<?php echo $form->value("client"); ?>" required >
+															<!--option>ABSA</option>
+															<option>FNB</option-->
+															<?php displayClients(); ?>
+														</select><?php echo $form->error("client"); ?>
+													</td></tr>
 													<tr class="detail"><td class="inputLabel">Article ID:</td><td class="inputHolder"><input type="text" name="articleid" id="articleid" placeholder="Article ID" value="<?php echo $form->value("articleid"); ?>" required /><?php echo $form->error("articleid"); ?></td></tr>
 													<tr class="detail"><td class="inputLabel">Publication Date:</td><td class="inputHolder"><input type="date" name="publicationdate" id="publicationdate" placeholder="Publication Date"  required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("publicationdate"); ?>" /><?php echo $form->error("publicationdate"); ?></td></tr>
 													<tr class="detail"><td class="inputLabel">Media Type:</td><td class="inputHolder"><select style="width:323px;" id="mediatype"  name="mediatype" value="<?php echo $form->value("mediatype"); ?>" required><option>Press</option><option>Sound</option><option>Video</option></select><?php echo $form->error("mediatype"); ?></td></tr>
@@ -107,7 +149,13 @@ global $session, $form;
 										<form id="broadcastForm" action='<?php echo URL; ?>dashboard/uploadBroadcast' method="post" enctype="multipart/form-data">
 											<div class="login-fields">
 												<table class="">
-													<tr class="detail"><td class="inputLabel">Select Client:</td><td class="inputHolder"><select style="width:323px;" id="client" name="client" value="<?php echo $form->value("client"); ?>" required ><option>ABSA</option><option>FNB</option></select><?php echo $form->error("client"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">Select Client:</td><td class="inputHolder">
+														<select style="width:323px;" id="client" name="client" value="<?php echo $form->value("client"); ?>" required >
+															<!--option>ABSA</option>
+															<option>FNB</option-->
+															<?php displayClients(); ?>
+														</select><?php echo $form->error("client"); ?>
+													</td></tr>
 													<tr class="detail"><td class="inputLabel">Article ID:</td><td class="inputHolder"><input type="text" name="articleid" id="articleid" placeholder="Article ID" value="<?php echo $form->value("articleid"); ?>" required /><?php echo $form->error("articleid"); ?></td></tr>
 													<tr class="detail"><td class="inputLabel">Publication Date:</td><td class="inputHolder"><input type="date" name="publicationdate" id="publicationdate" placeholder="Publication Date"  required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("publicationdate"); ?>" /><?php echo $form->error("publicationdate"); ?></td></tr>
 													<tr class="detail"><td class="inputLabel">Media Type:</td><td class="inputHolder"><select style="width:323px;" id="mediatype"  name="mediatype" value="<?php echo $form->value("mediatype"); ?>" required><option>Press</option><option>Sound</option><option>Video</option></select><?php echo $form->error("mediatype"); ?></td></tr>
@@ -167,6 +215,12 @@ global $session, $form;
 		$(function(){
 			Theme.init ();
 			$("li#upload").addClass("active");
+			
+			$("option.clients").each(function(){
+				$(this).text(function(i, oldText){
+					return $(this)[0].value.toUpperCase();
+				});
+			});
 		});
 	</script>
 	

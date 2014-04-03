@@ -130,22 +130,24 @@ class LoginModel{
 		else{
 			/* Generate new password */
 			$newpass = $session->generateRandStr(8);
-         
+			
 			/* Get email of user */
 			$userinfo = $database->getUserInfo($subuser);
 			$email  = $userinfo['email'];
 			
 			/* Attempt to send the email with new password */
-			if($mailer->sendNewPass($subuser,$email,$newpass)){
+			if($mailer->sendNewPass($subuser, $email, $newpass)){
 				/* Email sent, update database */
 				$database->updateUserField($subuser, "password", md5($newpass));
 				$_SESSION['forgotpass'] = true;
-				return true;
+				//return true;
+				return $email;
 			}
 			/* Email failure, do not change password */
 			else{
 				$_SESSION['forgotpass'] = false;
 				return false;
+				//return "Email failure, do not change password";
 			}
 		}
 	}

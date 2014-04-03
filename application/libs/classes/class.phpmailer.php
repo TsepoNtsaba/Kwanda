@@ -1906,6 +1906,6 @@ class PHPMailer {
 
 };
 
-$mailer = new PHPMailer();
+$php_mailer = new PHPMailer();
 
 ?>

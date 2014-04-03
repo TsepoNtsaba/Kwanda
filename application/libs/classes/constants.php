@@ -86,8 +86,8 @@ define("COOKIE_PATH", "/");  //Avaible in whole domain
 /*define("EMAIL_FROM_NAME", "ARMAN G. DE CASTRO");
 define("EMAIL_FROM_ADDR", "armandecastro@gmail.com");
 define("EMAIL_WELCOME", false);*/
-define("EMAIL_FROM_NAME", "Marabele Enterprise (Pty) Ltd");
-define("EMAIL_FROM_ADDR", "marabele.pty.ltd@gmail.com");
+define("EMAIL_FROM_NAME", "Kwanda Technical Support");
+define("EMAIL_FROM_ADDR", "marabele.ptyltd@gmail.com");
 define("EMAIL_WELCOME", true);
 
 /**

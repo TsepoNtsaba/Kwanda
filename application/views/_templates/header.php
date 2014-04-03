@@ -101,7 +101,7 @@
 							</a>
 						</li>
 						
-						<?php if($session->isAdmin()){ ?>
+						<?php if($session->isAdmin() || $session->isMaster()){ ?>
 							<li id="upload">					
 								<a href="<?php echo URL; ?>dashboard/upload">
 									<i class="icon-upload"></i>
@@ -120,7 +120,7 @@
 							<li id="admin">
 								<a href="<?php echo URL; ?>dashboard/admin">
 									<i class="icon-user"></i>
-									<span>Clients</span> 
+									<span><?php echo $session->isAdmin() === true ? "Users" : "Clients"; ?></span> 
 									<!--<b class="caret"></b>-->
 								</a>	
 							</li>

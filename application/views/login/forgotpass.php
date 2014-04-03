@@ -19,7 +19,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	
-	<!--link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800"-->
+	<script type="text/javascript" src="<?php echo THEME; ?>plugins/lightbox/js/jquery.min.js"></script><!--lightbox-->
+	
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>plugins/lightbox/js/lightbox/themes/facebook/jquery.lightbox.css" /><!--lightbox-->
+	
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>plugins/msgbox/javascript/msgbox/jquery.msgbox.css" /><!--messagebox-->
+	
+	<script type="text/javascript" src="<?php echo THEME; ?>plugins/lightbox/js/lightbox/jquery.lightbox.min.js"></script><!--lightbox-->
+	
+	<script type="text/javascript" src="<?php echo THEME; ?>plugins/msgbox/javascript/msgbox/jquery.msgbox.min.js"></script><!--messagebox-->
+	
+	<link rel="stylesheet" href="<?php echo THEME; ?>plugins/msgAlert/css/msgAlert.css" type="text/css" charset="utf-8" /><!--MessageAlert-->
+	
+	<script src="<?php echo THEME; ?>plugins/msgAlert/js/msgAlert.js"></script><!--MessageAlert-->
+	
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/font-awesome.css">
 	
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/bootstrap.css">
@@ -28,10 +42,18 @@
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/ui-lightness/jquery-ui-1.8.21.custom.css">	
 	
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/application.css">
-	<link rel="stylesheet" href="<?php echo THEME; ?>default.css">
-
+	
+	<link rel="stylesheet" href="<?php echo THEME; ?>css/application-black-orange.css">
+	<link rel="stylesheet" href="<?php echo THEME; ?>css/pages/dashboard.css">
+	
+	<script src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
+	<script src="<?php echo RESOURCES; ?>js/jquery.form.js"></script>
+	
+	<script src="<?php echo THEME; ?>js/jquery.form.js"></script>
+	
 	<script src="<?php echo THEME; ?>js/libs/modernizr-2.5.3.min.js"></script>
-
+	
+	<link rel="stylesheet" href="<?php echo THEME; ?>default.css">
 </head>
 
 <body class="login">
@@ -43,7 +65,7 @@
 	<div class="content clearfix">
 		
 		<!--form action="process.php" method="post"-->
-		<form action="<?php echo URL; ?>login/procForgotPass" method="post">
+		<form id="forgotPassForm" action="<?php echo URL; ?>login/procForgotPass" method="post">
 		
 			<h1>Forgot Password</h1>
 			
@@ -125,6 +147,55 @@
 <script src="<?php echo THEME; ?>js/libs/bootstrap/bootstrap.min.js"></script>
 
 <script src="<?php echo THEME; ?>js/signin.js"></script-->
+
+	<script>
+		//Uploader Form uploading script
+		$(document).ready(function(){
+			var options = {
+				beforeSend: function(){
+					/*$("#broadcastProgress").show();
+					//clear everything
+					$("#broadcastBar").width('0%');
+					$("#broadcastMessage").html("");
+					$("#broadcastPercent").html("0%");*/
+				}, uploadProgress: function(event, position, total, percentComplete){
+					//$("#broadcastBar").width(percentComplete+'%');
+					//$("#broadcastPercent").html(percentComplete+'%');
+				}, success: function(){
+					//$("#broadcastBar").width('100%');
+					//$("#broadcastPercent").html('100%');
+					$.msgbox("An email containing your new password has been sent to the address: "+response..responseText+", please use that password to log into the portal.", {
+						type : 'confirm',
+						buttons : [
+							{type: 'submit', value:'OK'},
+						]
+					}, function(buttonPressed){
+						window.location.href = "<?php echo URL; ?>";
+					});
+				}, complete: function(response){
+					//$("#broadcastMessage").html("<font color='green'>"+response.responseText+"</font>");
+					$.msgbox("An email containing your new password has been sent to the address: "+response..responseText+", please use that password to log into the portal.", {
+						type : 'confirm',
+						buttons : [
+							{type: 'submit', value:'OK'},
+						]
+					}, function(buttonPressed){
+						window.location.href = "<?php echo URL; ?>";
+					});
+				}, error: function(){
+					//$("#broadcastMessage").html("<font color='red'> ERROR: unable to upload files</font>");
+					$.msgAlert ({
+						type: "error"
+						, title: "Error"
+						, text: "An Error occured while send you an email, please try again later"
+					});
+				}
+			}; 
+			
+			$("#forgotPassForm").ajaxForm(options);
+		});
+
+	</script>
 
 </body>
 </html>

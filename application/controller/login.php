@@ -121,11 +121,14 @@ class Login extends Controller{
 		// perform the procForgotPass() method of the login-model
 		$result = $login_model->procForgotPass();
 		
-		if($result == "true"){
-			header('Location: '.URL.'login/index');
+		echo $result;
+		
+		/*if($result){
+			//header('Location: '.URL.'login/index');
+			echo $result;
 		}else{
-			header('Location: '.URL.'login/forgotPass');
-		}
+			//header('Location: '.URL.'login/forgotPass');
+		}*/
 	}
 }
 		
