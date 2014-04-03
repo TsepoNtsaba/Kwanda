@@ -117,27 +117,27 @@
 				
 				<div class="field">
 					<label for="username">Username:</label>
-					<input type="text" id="username" name="user" maxlength="30" placeholder="Username" class="login" value="<?php echo $form->value("user"); ?>" /> <?php echo $form->error("user"); ?>
+					<input type="text" id="username" name="user" maxlength="30" placeholder="Username" class="login" value="<?php echo $form->value("user"); ?>" required /> <?php echo $form->error("user"); ?>
 				</div> <!-- /field -->
 				
 				<div class="field">
 					<label for="email">Email Address:</label>
-					<input type="text" id="email" name="email" maxlength="50" placeholder="Email" class="login" value="<?php echo $form->value("email"); ?>" /> <?php echo $form->error("email"); ?>
+					<input type="text" id="email" name="email" maxlength="50" placeholder="Email" class="login" value="<?php echo $form->value("email"); ?>" required /> <?php echo $form->error("email"); ?>
 				</div> <!-- /field -->
 				
 				<div class="field">
 					<label for="password">Password:</label>
-					<input type="password" id="password" name="pass" maxlength="30" placeholder="Password" class="login" value="<?php echo $form->value("pass"); ?>" /> <?php echo $form->error("pass"); ?>
+					<input type="password" id="password" name="pass" maxlength="30" placeholder="Password" class="login" value="<?php echo $form->value("pass"); ?>" required /> <?php echo $form->error("pass"); ?>
 				</div> <!-- /field -->
 				
 				<div class="field">
 					<label for="confirm_password">Confirm Password:</label>
-					<input type="password" id="confirm_password" name="confirm_pass" placeholder="Confirm Password" class="login"  value="<?php echo $form->value("confirm_pass"); ?>" /> <?php echo $form->error("confirm_pass"); ?>
+					<input type="password" id="confirm_password" name="confirm_pass" placeholder="Confirm Password" class="login"  value="<?php echo $form->value("confirm_pass"); ?>" required /> <?php echo $form->error("confirm_pass"); ?>
 				</div> <!-- /field -->
 				
 				<div class="field">
 					<label for="user_level">User Level:</label>
-					<select id="user_level" name="user_level">
+					<select id="user_level" name="user_level" required >
 						<option value="<?php echo MASTER_LEVEL; ?>" >Employee</option><option value="<?php echo AGENT_LEVEL; ?>" >Client</option>
 					</select>
 				</div> <!-- /field -->
@@ -146,10 +146,10 @@
 			
 			<div class="login-actions">
 				
-				<span class="login-checkbox">
+				<!--span class="login-checkbox">
 					<input id="Field" name="Field" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" />
 					<label class="choice" for="Field">I have read and agree with the Terms of Use.</label>
-				</span>
+				</span-->
 				
 				<input type="hidden" name="subjoin" value="1">
 				<input type="submit" value="Register" class="button btn btn-secondary btn-large" />

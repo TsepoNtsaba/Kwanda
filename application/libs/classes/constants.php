@@ -88,7 +88,7 @@ define("EMAIL_FROM_ADDR", "armandecastro@gmail.com");
 define("EMAIL_WELCOME", false);*/
 define("EMAIL_FROM_NAME", "Marabele Enterprise (Pty) Ltd");
 define("EMAIL_FROM_ADDR", "marabele.pty.ltd@gmail.com");
-define("EMAIL_WELCOME", false);
+define("EMAIL_WELCOME", true);
 
 /**
  * This constant forces all users to have

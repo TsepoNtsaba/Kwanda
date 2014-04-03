@@ -30,6 +30,7 @@
 
 						<!-- Tab panes -->
 						<div class="tab-content">
+<<<<<<< HEAD
 						  <div class="tab-pane fade in active" id="twitter">
 							<h1 style="text-align: center">Twitter Sentiment Analysis</h1>
 							<div id="twitter_search" style="text-align: center">
@@ -38,6 +39,14 @@
 							    <input class="btn btn-large btn-secondary" type="submit" />
 							</form>
 							</div>
+=======
+							<div class="tab-pane fade in active" id="twitter">
+								<h1>Twitter Sentiment Analysis</h1>
+								<form method="GET">
+									<span class="label label-secondary">Keyword</span>&nbsp;&nbsp; <input type="text" name="q" />
+									<input class="btn btn-large btn-secondary" type="submit" />
+								</form>
+>>>>>>> 6bc07e693fca77adc7324d1aceac1ce69aca233a
 							
 							<?php
 

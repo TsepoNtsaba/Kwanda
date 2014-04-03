@@ -68,6 +68,8 @@ class LoginModel{
 			$_POST['user'] = strtolower($_POST['user']);
 		}
 		
+		echo "<script> alert('yebo'); </script>";
+		
 		/* Registration attempt */
 		$retval = $session->register($_POST['user'], $_POST['pass'], $_POST['email'], $_POST['user_level']);
 		

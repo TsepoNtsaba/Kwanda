@@ -78,7 +78,7 @@ class PHPMailer {
    * Sets the From name of the message.
    * @var string
    */
-  var $FromName          = 'Novoxi.com';
+  var $FromName          = 'Kwanda Media Portal';
 
   /**
    * Sets the Sender email (Return-Path) of the message.  If not empty,
@@ -1904,6 +1904,8 @@ class PHPMailer {
     $this->sign_key_pass = $key_pass;
   }
 
-}
+};
+
+$mailer = new PHPMailer();
 
 ?>

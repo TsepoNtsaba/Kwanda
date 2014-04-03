@@ -11,10 +11,10 @@ class Dashboard extends Controller{
 	*/
 	public function index(){
 		// load views.
-		/*require 'application/views/_templates/header.php';
+		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/index.php';
-		require 'application/views/_templates/footer.php';*/
-		$this->upload();
+		require 'application/views/_templates/footer.php';
+		//$this->upload();
 	}
 	
 	/**
@@ -160,39 +160,33 @@ class Dashboard extends Controller{
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function _print(){
+	public function press(){
 		require 'application/views/_templates/header.php';
-		require 'application/views/dashboard/print.php';
+		require 'application/views/dashboard/press.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function sound(){
+	public function broadcast(){
 		require 'application/views/_templates/header.php';
-		require 'application/views/dashboard/sound.php';
+		require 'application/views/dashboard/broadcast.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
-	public function video(){
-		require 'application/views/_templates/header.php';
-		require 'application/views/dashboard/video.php';
-		require 'application/views/_templates/footer.php';
-	}
-	
-	public function uploadPrint(){
-		// run the uploadPrint() method in the login-model
+	public function uploadPress(){
+		// run the uploadPress() method in the login-model
 		$upload_model = $this->loadModel('UploadModel');
 		// perform the login method and put result into $upload_successful
-		$upload_successful = $upload_model->uploadPrint();
+		$upload_successful = $upload_model->uploadPress();
 		
 		echo $upload_successful;
 	}
 	
-	public function uploadSound()
+	public function uploadBroadcast()
 	{
-		// run the uploadSound() method in the login-model
+		// run the uploadBroadcast() method in the login-model
 		$upload_model = $this->loadModel('UploadModel');
 		// perform the login method and put result into $upload_successful
-		$upload_successful = $upload_model->uploadSound();
+		$upload_successful = $upload_model->uploadBroadcast();
 		
 		echo $upload_successful;
 	}

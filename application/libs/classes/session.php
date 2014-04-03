@@ -232,7 +232,7 @@ class Session{
 	* 1. If no errors were found, it registers the new user and
 	* returns 0. Returns 2 if registration failed.
 	*/
-	function register($subuser, $subpass, $subemail){
+	function register($subuser, $subpass, $subemail, $sublevel){
 		global $database, $form, $mailer;  //The database, form and mailer object
       
 		/* Username error checking */
@@ -303,18 +303,89 @@ class Session{
 		/* Errors exist, have user correct them */
 		if($form->num_errors > 0){
 			return 1;  //Errors with form
-		}	
+		}
 		/* No errors, add the new account to the */
 		else{
-			$subid = $this->generateRandID();
-			$group = "Agent";
-			if($database->addNewAgent($subuser, md5($subpass), $subid, $subemail, $group)){
-				if(EMAIL_WELCOME){
-					$mailer->sendWelcome($subuser,$subemail,$subpass);
+			if($sublevel == 8){
+				$subid = $this->generateRandID();
+				$group = "Employee";
+				if($database->addNewMaster($subuser, md5($subpass), $subid, $subemail, $group)){
+					if(EMAIL_WELCOME){
+						$mailer->CharSet = "utf-8";
+						//$mailer->IsSMTP();  // telling the class to use SMTP
+						//$mailer->Host     = "smtp.example.com"; // SMTP server
+						
+						$mailer->From     = EMAIL_FROM_NAME;
+						$mailer->AddAddress(EMAIL_FROM_ADDR);
+						
+						$mailer->Subject  = "Registration on Kwanda Media Portal";
+						$mailer->Body     = "Welcome! You have just been registered as a client at Kwanda Media Portal "
+										."with the following information:\n\n"
+										."Username: ".$subuser."\n"
+										."Password: ".$subpass."\n\n"
+										."If you ever lose or forget your password, a new "
+										."password will be generated for you and sent to this "
+										."email address, if you would like to change your "
+										."email address you can do so by going to the "
+										."My Settings page after signing in.\n\n"
+										."- Kwanda Media Portal";
+						
+						//$mailer->WordWrap = 50;
+						
+						if(!$mailer->Send()){
+							//echo 'Message was not sent.';
+							//echo 'Mailer error: ' . $mailer->ErrorInfo;
+							return 3;
+						}else{
+							//echo 'Message has been sent.';
+						}
+						
+						//$mailer->sendWelcome($subuser,$subemail,$subpass);
+					}
+					return 0;  //New user added succesfully
+				}else{
+					return 2;  //Registration attempt failed
 				}
-				return 0;  //New user added succesfully
-			}else{
-				return 2;  //Registration attempt failed
+			}else if($sublevel == 1){
+				$subid = $this->generateRandID();
+				$group = "Client";
+				if($database->addNewAgent($subuser, md5($subpass), $subid, $subemail, $group)){
+					if(EMAIL_WELCOME){
+						$mailer->CharSet = "utf-8";
+						//$mailer->IsSMTP();  // telling the class to use SMTP
+						//$mailer->Host     = "smtp.example.com"; // SMTP server
+						
+						$mailer->From     = EMAIL_FROM_NAME;
+						$mailer->AddAddress(EMAIL_FROM_ADDR);
+						
+						$mailer->Subject  = "Registration on Kwanda Media Portal";
+						$mailer->Body     = "Welcome! You have just been registered as a client at Kwanda Media Portal "
+										."with the following information:\n\n"
+										."Username: ".$subuser."\n"
+										."Password: ".$subpass."\n\n"
+										."If you ever lose or forget your password, a new "
+										."password will be generated for you and sent to this "
+										."email address, if you would like to change your "
+										."email address you can do so by going to the "
+										."My Settings page after signing in.\n\n"
+										."- Kwanda Media Portal";
+						
+						//$mailer->WordWrap = 50;
+						
+						if(!$mailer->Send()){
+							//echo 'Message was not sent.';
+							//echo 'Mailer error: ' . $mailer->ErrorInfo;
+							return 3;
+						}else{
+							//echo 'Message has been sent.';
+						}
+						
+						//$mailer->sendWelcome($subuser,$subemail,$subpass);
+					}
+					return 0;  //New user added succesfully
+				}else{
+					return 2;  //Registration attempt failed
+				}
 			}
 		}
 	}
@@ -835,7 +906,7 @@ class Session{
 		else{
 			if($database->addMetaData($client, $article_id, $publication_date, $media_type, $media_name = NULL, $headline, $author, $circulation, $eav, $reach, $show_name, $start_time, $duration, $article_text, $file_url)){
 				if(EMAIL_WELCOME){
-					$mailer->sendWelcome($subuser,$subemail,$subpass);
+					//$mailer->sendWelcome($subuser,$subemail,$subpass);
 				}
 				return 0;  // Meta-data added succesfully
 			}else{
