@@ -94,12 +94,12 @@
 	
 				<div class="nav-collapse">
 					<ul id="main-nav" class="nav pull-right">
-						<!--li id="portal" class="nav-icon">
+						<li id="portal" class="nav-icon">
 							<a href="<?php echo URL; ?>dashboard/index">
 								<i class="icon-home"></i>
 								<span>Home</span>        					
 							</a>
-						</li-->
+						</li>
 						
 						<?php if($session->isAdmin()){ ?>
 							<li id="upload">					
@@ -195,7 +195,7 @@
 							</ul>    				
 						</li-->
 				
-						<li class="dropdown" id="extras">					
+						<li class="dropdown" id="extras">
 							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="icon-external-link"></i>
 								<span>Extras</span> 

@@ -36,7 +36,7 @@ class UploadModel{
 	/**
 	* Upload file and its metadata
 	*/
-	public function uploadPrint(){
+	public function uploadPress(){
 		global $session, $form;
 		$result = 1;
 		
@@ -139,7 +139,7 @@ class UploadModel{
 	/**
 	* Upload file and its metadata
 	*/
-	public function uploadSound(){
+	public function uploadBroadcast(){
 		global $session, $form;
 		$result = 1;
 		
