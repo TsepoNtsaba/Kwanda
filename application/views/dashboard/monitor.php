@@ -31,11 +31,13 @@
 						<!-- Tab panes -->
 						<div class="tab-content">
 						  <div class="tab-pane fade in active" id="twitter">
-							<h1>Twitter Sentiment Analysis</h1>
+							<h1 style="text-align: center">Twitter Sentiment Analysis</h1>
+							<div id="twitter_search" style="text-align: center">
 							<form method="GET">
 							   <span class="label label-secondary">Keyword</span>&nbsp;&nbsp; <input type="text" name="q" />
 							    <input class="btn btn-large btn-secondary" type="submit" />
 							</form>
+							</div>
 							
 							<?php
 
@@ -83,16 +85,16 @@
 							    $faceResults=$FacebookSentimentAnalysis->sentimentAnalysis($facebookSearchParams);*/
 							     
 							    ?>
-							    <h1>Results for "<?php echo $query; ?>"</h1>
+							    <div class="well"><p style="text-align: center">You searched for "<?php echo $query; ?>"</p></div>
 							    <table style="width:100%; height:100%" class="table table-bordered table-striped table-highlight">
 								
 								<?php
 								
 								//Print the Results
-								echo '<h1>Document Classification</h1>';
-								echo '<pre>';
-								echo $DocumentClassification['TopicClassification'];
-								echo '</pre>'; 
+								//echo '<h1>Document Classification</h1>';
+								//echo '<pre>';
+								//echo $DocumentClassification['TopicClassification'];
+								//echo '</pre>'; 
 								
 								/*echo '<h1>Information Retrieval</h1>';
 								echo '<pre>';
@@ -133,11 +135,13 @@
 						  </div>
 						  
 						  <div class="tab-pane fade" id="facebook">
-							  <h1>Facebook Sentiment Analysis</h1>
+							  <h1 style="text-align: center">Facebook Sentiment Analysis</h1>
+							  <div id="facebook_search" style="text-align: center">
 							<form method="GET">
 							   <span class="label label-secondary">Keyword</span>&nbsp;&nbsp; <input type="text" name="q" />
 							    <input class="btn btn-large btn-secondary" type="submit" />
 							</form>
+							</div>
 							
 							<?php
 
@@ -178,16 +182,16 @@
 							    $faceResults=$FacebookSentimentAnalysis->sentimentAnalysis($facebookSearchParams);
 							     
 							    ?>
-							    <h1>Results for "<?php echo $query; ?>"</h1>
+							    <div class="well"><p style="text-align: center">You searched for "<?php echo $query; ?>"</p></div>
 							    <table style="width:100%; height:100%" class="table table-bordered table-striped table-highlight">
 								
 								<?php
 								
 								//Print the Results
-								echo '<h1>Document Classification</h1>';
-								echo '<pre>';
-								echo $DocumentClassification['TopicClassification'];
-								echo '</pre>'; 
+								//echo '<h1>Document Classification</h1>';
+								//echo '<pre>';
+								//echo $DocumentClassification['TopicClassification'];
+								//echo '</pre>'; 
 								
 								
 								foreach($faceResults as $status) {
@@ -221,15 +225,81 @@
 						
 						  </div>
 						  <div class="tab-pane fade" id="search">
-							   <h1>KSearch</h1>
+							   <!--<h1 style="text-align: center">KSearch</h1>-->
 							<p/>
-
-							<form name="input" action="./solr/wlsem/" method="get" >
+							
+							<!--<pre>
+								<?php 
+									  //curl echo 'http://localhost:2016/api/collections';
+									  /*$ch = curl_init('http://localhost:2014/api/collections');
+									  echo $ch;
+									  curl_exec($ch);
+									  curl_close($ch);*/
+									  $query = $_GET['q'];
+								?>
+							</pre>-->
+							<!--<div class="panel-group" id="accordion">
+								<div class="panel panel-default">
+								    <div class="panel-heading">
+								      <h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+									 Data Source Name
+									</a>
+								      </h4>
+								    </div>
+								    <div id="collapseOne" class="panel-collapse collapse in">
+								      <div class="panel-body">
+									<ul class="list-group">
+									  <li class="list-group-item">Cras justo odio</li>
+									  <li class="list-group-item">Dapibus ac facilisis in</li>
+									  <li class="list-group-item">Morbi leo risus</li>
+									  <li class="list-group-item">Porta ac consectetur ac</li>
+									  <li class="list-group-item">Vestibulum at eros</li>
+									</ul>
+								      </div>
+								    </div>
+								  </div>
+								  
+								  <div class="panel panel-default">
+								    <div class="panel-heading">
+								      <h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+									  Keyword Display
+									</a>
+								      </h4>
+								    </div>
+								    <div id="collapseTwo" class="panel-collapse collapse">
+								      <div class="panel-body">
+									<ul class="list-group">
+									  <li class="list-group-item">Cras justo odio</li>
+									  <li class="list-group-item">Dapibus ac facilisis in</li>
+									  <li class="list-group-item">Morbi leo risus</li>
+									  <li class="list-group-item">Porta ac consectetur ac</li>
+									  <li class="list-group-item">Vestibulum at eros</li>
+									</ul>
+								      </div>
+								    </div>
+								  </div>
+							</div>-->
+							
+							<!--<div id="ksearch" style="text-align: center">
+							<form name="input" action="http://localhost:2014/solr/South_Africa/lucid" method="get" >
 								<span class="label label-secondary">Keyword</span>&nbsp;&nbsp;<input type="text" name="q" />
 								<input  class="btn btn-large btn-secondary" type="submit"/>
-								<input type="hidden" name="start" value="0" />
-								<input type="hidden" name="rows" value="10" />
+								<input type="hidden" name="wt" value="json" />
 							</form>
+							</div>
+							
+							<br/>
+							<?php
+							if(isset($_GET['q']) && $_GET['q']!='') {
+							?>
+							<div class="well"><p style="text-align: center">You searched for "<?php echo $query; ?>"</p></div>
+							<?php
+							}
+							?>-->
+							
+							<iframe id="flare" style="height:1000px; width:100%" src="http://127.0.0.1:2016/flare/" seamless ><p>Aw snap :-( Your browser doesn't support iframes. Please don't use IE, Opera, or Safari. If your using Firefox or Google Chrome, please upgrade your browser.</p></iframe>
 						  </div>
 						</div>
 						
@@ -237,6 +307,7 @@
 				
 			
 		</div> <!-- /#content -->
+		</div>
 
 		<script src="<?php echo THEME; ?>js/libs/jquery-ui-1.8.21.custom.min.js"></script>
 		<script src="<?php echo THEME; ?>js/libs/jquery.ui.touch-punch.min.js"></script>
@@ -247,4 +318,10 @@
 		
 
 		<script src="<?php echo THEME; ?>js/plugins/excanvas/excanvas.min.js"></script>
-	
+		
+		<script>
+			$(function(){
+				Theme.init ();
+				$("li#monitor").addClass("active");
+			});
+		</script>

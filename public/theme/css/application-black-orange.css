@@ -2018,7 +2018,7 @@ Layout: Masthead
 ------------------------------------------------------------------- */
 #masthead {
   width: 100%;
-  padding: 20px 0;
+  padding: 0px 0;
   color: #333333;
   background-color: #f8f8f8;
   background-image: -moz-linear-gradient(top, #ffffff, #ededed);
