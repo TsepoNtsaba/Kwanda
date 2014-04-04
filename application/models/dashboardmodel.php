@@ -265,4 +265,70 @@ class DashboardModel{
 		}
 		return $subuser;
 	}
+	
+	/**
+	* procEditData - Attempts to edit the meta_data
+	* information.
+	*/
+	function procEditData(){
+		global $session, $form, $database;
+		
+		/* Collecting form data via post */
+		$medianame = $_POST["medianame"];
+		$headline = $_POST["headline"];
+		$publicationdate = $_POST["publicationdate"];
+		$mediatype = $_POST["mediatype"];
+		$articletext = $_POST["articletext"];
+		$pid = $_POST["pid"];
+		
+		// Errors exist, have user correct them 
+		if($form->num_errors > 0){
+			$q2 = "UPDATE meta_data SET medianame='$medianame',headline='$headline',publicationdate='$publicationdate',mediatype='$mediatype',articletext='$articletext' WHERE pid = '$pid'";
+			$q_result = mysql_query($q2) or die(mysql_error());
+			if(!$q_result)
+				return json_encode(Array("response" => "false", "msg" => "System was unable to edit data 1"));
+			//header("Location: ".$session->referrer);
+			return json_encode(Array("response" => "true", "msg" => "User edit Success"));
+		}
+		// Edit user from database 
+		else
+		{
+			$q1 = "UPDATE meta_data SET medianame='$medianame',headline='$headline',publicationdate='$publicationdate',mediatype='$mediatype',articletext='$articletext' WHERE pid = '$pid'";
+			$q_result = mysql_query($q1) or die(mysql_error());
+			if(!$q_result)
+				return json_encode(Array("response" => "false", "msg" => "System was unable to edit data 2".
+				$medianame.$headline.$publicationdate.$mediatype.$articletext.$pid));
+			//header("Location: ".$session->referrer);
+			return json_encode(Array("response" => "true", "msg" => "User edit Success"));
+		}
+	}
+	
+	/**
+	* procDeleteData - If the submitted id is correct,
+	* the data is deleted from the database.
+	*/
+	public function procDeleteData()
+	{
+		global $session, $database, $form;
+		
+		$pid = $_POST["pid"];
+		
+		/* Errors exist, have user correct them */
+		if($form->num_errors > 0){
+			$q2 = "DELETE FROM ".TBL_META_DATA." WHERE pid = '$pid'";
+			if(!$database->query($q2))
+				return json_encode(Array("response" => "false", "msg" => "System was unable to delete user #del"));
+			//header("Location: ".$session->referrer);
+			return json_encode(Array("response" => "true", "msg" => "User Delete Success"));
+		}
+		/* Delete meta_data from database */
+		else{
+			$q1 = "DELETE FROM ".TBL_META_DATA." WHERE pid = '$pid'";
+			
+			if(!$database->query($q1))
+				return json_encode(Array("response" => "false", "msg" => "System was unable to delete user #del"));
+			//header("Location: ".$session->referrer);
+			return json_encode(Array("response" => "true", "msg" => "User Delete Success"));
+		}
+	}
 }

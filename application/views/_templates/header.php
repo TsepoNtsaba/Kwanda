@@ -30,7 +30,7 @@
 	
 	<script src="<?php echo THEME; ?>plugins/msgAlert/js/msgAlert.js"></script><!--MessageAlert-->
 	
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
+	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800"> -->
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/font-awesome.css">
 	
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/bootstrap.css">
@@ -43,8 +43,8 @@
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/application-black-orange.css">
 	<link rel="stylesheet" href="<?php echo THEME; ?>css/pages/dashboard.css">
 	
-	<script src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
-	<script src="<?php echo RESOURCES; ?>js/jquery.form.js"></script>
+	<!--<script src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
+	<script src="<?php echo RESOURCES; ?>js/jquery.form.js"></script>-->
 	
 	<script src="<?php echo THEME; ?>js/jquery.form.js"></script>
 	
@@ -73,9 +73,9 @@
 							</a>
 					
 							<ul class="dropdown-menu pull-right">
-								<li><a href="./faq.html">FAQ</a></li>
-								<li><a href="javascript:;">Contact Us</a></li>
-								<li><a href="javascript:;">About Us</a></li>
+								<li><a href="<?php echo URL; ?>dashboard/faq">FAQ</a></li>
+								<li><a href="<?php echo URL; ?>dashboard/contact">Contact Us</a></li>
+								<li><a href="<?php echo URL; ?>dashboard/aboutus">About Us</a></li>
 								</li>
 							</ul> 
 						</li>
@@ -101,7 +101,7 @@
 							</a>
 						</li>
 						
-						<?php if($session->isAdmin() || $session->isMaster()){ ?>
+						<?php if($session->isAdmin()){ ?>
 							<li id="upload">					
 								<a href="<?php echo URL; ?>dashboard/upload">
 									<i class="icon-upload"></i>
@@ -116,11 +116,24 @@
 									<li><a tabindex="-1" href="../../upload/online.php">Online Content</a></li>
 								</ul -->
 							</li>
-							
+							<li id="viewuploads">
+								<a href="<?php echo URL; ?>dashboard/viewuploads">
+									<i class="icon-user"></i>
+									<span>View Uploads</span> 
+									<!--<b class="caret"></b>-->
+								</a>
+							</li>
+							<li id="generatereports">
+								<a href="<?php echo URL; ?>dashboard/generatereports">
+									<i class="icon-user"></i>
+									<span>Generate Reports</span> 
+									<!--<b class="caret"></b>-->
+								</a>
+							</li>
 							<li id="admin">
 								<a href="<?php echo URL; ?>dashboard/admin">
 									<i class="icon-user"></i>
-									<span><?php echo $session->isAdmin() === true ? "Users" : "Clients"; ?></span> 
+									<span>Clients</span> 
 									<!--<b class="caret"></b>-->
 								</a>	
 							</li>

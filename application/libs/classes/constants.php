@@ -32,6 +32,7 @@ define("TBL_USERS", "users");
 define("TBL_ACTIVE_USERS",  "active_users");
 define("TBL_ACTIVE_GUESTS", "active_guests");
 define("TBL_BANNED_USERS",  "banned_users");
+define("TBL_META_DATA",  "meta_data");
 
 /**
  * Special Names and Level Constants - the admin

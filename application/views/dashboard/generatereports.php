@@ -1,24 +1,13 @@
 <style>
 	#broadcastBar, pressBar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
 	#broadcastPercent, #pressPercent { position:relative; display:inline-block; top:3px; left:48%; }
+	.checkbx
+	{
+		width: 15px;
+	}
 </style>
 <?php
-/**
- * Admin.php
- *
- * This is the Admin Center page. Only administrators
- * are allowed to view this page. This page displays the
- * database table of users and banned users. Admins can
- * choose to delete specific users, delete inactive users,
- * ban users, update user levels, etc.
- *
- * Written by: Jpmaster77 a.k.a. The Grandmaster of C++ (GMC)
- * Last Updated: August 26, 2004
- * Modified by: Arman G. de Castro, October 3, 2008
- * email: armandecastro@gmail.com
- */
 global $session, $form;
-
 
 /**
  * displayClients - Displays the clients in
@@ -59,14 +48,14 @@ global $session, $form;
 	}
 	//echo "</tbody><br>";
 }
+
 ?>
 	
 		<div id="masthead">
 			<div class="container">
 				<div class="masthead-pad">
 					<div class="masthead-text">
-						<h2>Upload panel</h2>
-						<p>Upload videos, sound clips, print documents and online content.</p>
+						<h2>Generate reports panel</h2>
 					</div> <!-- /.masthead-text -->
 				</div>
 			</div> <!-- /.container -->	
@@ -78,15 +67,14 @@ global $session, $form;
 					
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#press" data-toggle="tab">Press</a></li>
-						<li><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
+						<li class="active"><a href="#searcharticle" data-toggle="tab">Search Article</a></li>
+						<li><a href="#generatereports" data-toggle="tab">Generate Reports</a></li>
 					</ul>
 		
 					<!-- Tab panes -->
 					<div class="tab-content">
-						<div class="tab-pane fade in active" id="press">
-							<h2 style="margin: 0;">Press</h2>
-							<p style="margin: 0;">This is the Press Upload panel.</p>
+						<div class="tab-pane fade in active" id="searcharticle">
+							<h2 style="margin: 0;">Search Article</h2>
 							
 							<div class="span6 offset3" style="text-align: center">
 								<div style="width: 550px; margin:0;" class="account-container register stacked">
@@ -101,26 +89,17 @@ global $session, $form;
 															<?php displayClients(); ?>
 														</select><?php echo $form->error("client"); ?>
 													</td></tr>
-													<tr class="detail"><td class="inputLabel">Article ID:</td><td class="inputHolder"><input type="text" name="articleid" id="articleid" placeholder="Article ID" value="<?php echo $form->value("articleid"); ?>" required /><?php echo $form->error("articleid"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Publication Date:</td><td class="inputHolder"><input type="date" name="publicationdate" id="publicationdate" placeholder="Publication Date"  required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("publicationdate"); ?>" /><?php echo $form->error("publicationdate"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Media Type:</td><td class="inputHolder"><select style="width:323px;" id="mediatype"  name="mediatype" value="<?php echo $form->value("mediatype"); ?>" required><option>Press</option><option>Sound</option><option>Video</option></select><?php echo $form->error("mediatype"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Headline:</td><td class="inputHolder"><input type="text" name="headline" id="headline" placeholder="Headline" value="<?php echo $form->value("headline"); ?>" required /><?php echo $form->error("headline"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Author:</td><td class="inputHolder"><input type="text" name="author" id="author" placeholder="Author" value="<?php echo $form->value("author"); ?>" required /><?php echo $form->error("author"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Circulation:</td><td class="inputHolder"><input type="text" name="circulation" id="circulation" placeholder="Circulation" value="<?php echo $form->value("circulation"); ?>" required /><?php echo $form->error("circulation"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Eav:</td><td class="inputHolder"><input type="text" name="eav" id="eav" placeholder="Eav" value="<?php echo $form->value("eav"); ?>" required /><?php echo $form->error("eav"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Reach:</td><td class="inputHolder"><input type="text" name="reach" id="reach" placeholder="Reach" value="<?php echo $form->value("reach"); ?>" required /><?php echo $form->error("reach"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Article Text:</td><td class="inputHolder"><textarea style="width:310px;" name="articletext" id="articletext" maxlength="500" required /><?php echo $form->value("articletext"); ?></textarea><?php echo $form->error("articletext"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">From Date:</td><td class="inputHolder"><input type="date" name="fromdate" id="fromdate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("fromdate"); ?>" /><?php echo $form->error("fromdate"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">To Date:</td><td class="inputHolder"><input type="date" name="todate" id="todate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("todate"); ?>" /><?php echo $form->error("todate"); ?></td></tr>
+													
+													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" value="reviewedOnly" required />Reviewed Only</td></tr>
+													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" value="notReviewed" required />Not Reviewed</td></tr>
+													
 												</table>
 											
-												<div class="field">
-													<label for="file">Filename: </label>
-													<input type="file" name="file[]" id="pressFile" class="login" onchange="check_file_press()" multiple required />
-													<?php echo $form->error("file[]"); ?>
-												</div> <!-- /.field -->
-											 
 												<div class="login-actions">
 													<input type="hidden" name="MAX_FILE_SIZE" value="2147483648" />
-													<input class="btn btn-large btn-secondary" id='submit'  type='submit' name='submit' value='Upload' multiple />
+													<input class="btn btn-large btn-secondary" id='submit'  type='submit' name='submit' value='Search' multiple />
 												</div>
 											</div><!--login fields-->
 										</form>
@@ -138,15 +117,14 @@ global $session, $form;
 							
 						</div> <!-- /.tab-pane -->
 						
-						<!-- Broadcast tab -->
-						<div class="tab-pane fade" id="broadcast">
-							<h2 style="margin: 0;">TV and Radio</h2>
-							<p style="margin: 0;">This is the TV and Radio Upload panel.</p>
+						<!-- generatereports tab -->
+						<div class="tab-pane fade" id="generatereports">
+							<h2 style="margin: 0;">Generate Reports</h2>
 							
 							<div class="span6 offset3" style="text-align: center">
 								<div style="width: 550px; margin:0;" class="account-container register stacked">
 									<div class="content clearfix">
-										<form id="broadcastForm" action='<?php echo URL; ?>dashboard/uploadBroadcast' method="post" enctype="multipart/form-data">
+										<form id="pressForm" action='<?php echo URL; ?>dashboard/uploadPress' method="post" enctype="multipart/form-data">
 											<div class="login-fields">
 												<table class="">
 													<tr class="detail"><td class="inputLabel">Select Client:</td><td class="inputHolder">
@@ -156,33 +134,35 @@ global $session, $form;
 															<?php displayClients(); ?>
 														</select><?php echo $form->error("client"); ?>
 													</td></tr>
-													<tr class="detail"><td class="inputLabel">Article ID:</td><td class="inputHolder"><input type="text" name="articleid" id="articleid" placeholder="Article ID" value="<?php echo $form->value("articleid"); ?>" required /><?php echo $form->error("articleid"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Publication Date:</td><td class="inputHolder"><input type="date" name="publicationdate" id="publicationdate" placeholder="Publication Date"  required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("publicationdate"); ?>" /><?php echo $form->error("publicationdate"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Media Type:</td><td class="inputHolder"><select style="width:323px;" id="mediatype"  name="mediatype" value="<?php echo $form->value("mediatype"); ?>" required><option>Press</option><option>Sound</option><option>Video</option></select><?php echo $form->error("mediatype"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Media Name:</td><td class="inputHolder"><input type="text" name="medianame" id="mediaName" placeholder="Media Name" value="<?php echo $form->value("mediaName"); ?>" required /><?php echo $form->error("mediaName"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Headline:</td><td class="inputHolder"><input type="text" name="headline" id="headline" placeholder="Headline" value="<?php echo $form->value("headline"); ?>" required /><?php echo $form->error("headline"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Author:</td><td class="inputHolder"><input type="text" name="author" id="author" placeholder="Author" value="<?php echo $form->value("author"); ?>" required /><?php echo $form->error("author"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Circulation:</td><td class="inputHolder"><input type="text" name="circulation" id="circulation" placeholder="Circulation" value="<?php echo $form->value("circulation"); ?>" required /><?php echo $form->error("circulation"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Eav:</td><td class="inputHolder"><input type="text" name="eav" id="eav" placeholder="Eav" value="<?php echo $form->value("eav"); ?>" required /><?php echo $form->error("eav"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Reach:</td><td class="inputHolder"><input type="text" name="reach" id="reach" placeholder="Reach" value="<?php echo $form->value("reach"); ?>" required /><?php echo $form->error("reach"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Show Name:</td><td class="inputHolder"><input type="text" name="showname" id="showName" placeholder="Show Name" value="<?php echo $form->value("showName"); ?>" required /><?php echo $form->error("showName"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Start Time:</td><td class="inputHolder"><input type="text" name="starttime" id="startTime" placeholder="hh:mm" title="hh:mm" value="<?php echo $form->value("startTime"); ?>" required /><?php echo $form->error("startTime"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Duration:</td><td class="inputHolder"><input type="text" name="duration" id="duration" placeholder="hh:mm:ss" title="hh:mm:ss" value="<?php echo $form->value("duration"); ?>" required /><?php echo $form->error("duration"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">Article Text:</td><td class="inputHolder"><textarea style="width:310px;" name="articletext" id="articletext" maxlength="500" required /><?php echo $form->value("articletext"); ?></textarea><?php echo $form->error("articletext"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">From Date:</td><td class="inputHolder"><input type="date" name="fromdate" id="fromdate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("fromdate"); ?>" /><?php echo $form->error("fromdate"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">To Date:</td><td class="inputHolder"><input type="date" name="todate" id="todate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("todate"); ?>" /><?php echo $form->error("todate"); ?></td></tr>
+													
+													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" class="checkbx" value="reviewedOnly" required />Reviewed Only</td></tr>
+													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" class="checkbx" value="notReviewed" required />Not Reviewed</td></tr>
+													
 												</table>
-										
-												<div class="field">
-													<label for="file">Filename: </label>
-													<input type="file" name="file[]" id="broadcastFile" class="login" onchange="check_file_broadcast()" multiple required />
-													<?php echo $form->error("file[]"); ?>
-												</div>
-										 
+											
 												<div class="login-actions">
 													<input type="hidden" name="MAX_FILE_SIZE" value="2147483648" />
-													<input  class="btn btn-large btn-secondary" id='submit'  type='submit' name='submit' value='Upload' multiple />
+													<input class="btn btn-large btn-secondary" id='submit'  type='submit' name='submit' value='Search' multiple />
 												</div>
 											</div><!--login fields-->
 										</form>
+									</div><!-- /.content clearfix -->
+							
+									<div id="pressProgress" class="progress progress-striped">
+										<div id="pressBar" class="bar"></div> <!-- /.bar -->
+										<div id="pressPercent">0%</div >
+									</div> <!-- /.progress -->
+									<br/>
+									<div id="pressMessage"></div>
+								
+								</div><!-- /.account-container register stacked -->
+								
+								<h2 style="margin: 0;">List Reports</h2>
+								<div style="width: 550px; margin:0;" class="account-container register stacked">
+									<div class="content clearfix">
+										List
 									</div><!-- /.content clearfix -->
 									
 									<div id="broadcastProgress" class="progress progress-striped">
@@ -193,10 +173,8 @@ global $session, $form;
 									<div id="broadcastMessage"></div>
 								
 								</div><!-- /.account-container register stacked -->
-							</div><!-- /.span6 -->
-							
+							</div><!-- /.span6 -->						
 						</div> <!-- /.tab-pane -->
-					
 					</div> <!-- /.tab-content -->
 					
 				</div> <!-- /.row -->

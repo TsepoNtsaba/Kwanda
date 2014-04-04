@@ -2175,6 +2175,19 @@ table [class*=span],
   background-repeat: no-repeat;
 }
 
+/* Meta Data Table Styling */
+.metadataTable
+{
+	
+}
+
+.fieldEdit{
+	width: 90%;
+}
+/* Meta Data Table Styling Ends */
+
+
+
 /* White icons with optional class, or on hover/active states of certain elements */
 
 .icon-white,
@@ -4051,7 +4064,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .tab-content {
-  overflow: auto;
+  overflow: visible;
 }
 
 .tabs-below > .nav-tabs,

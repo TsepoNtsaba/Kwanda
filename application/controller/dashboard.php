@@ -132,6 +132,30 @@ class Dashboard extends Controller{
 		echo $result;
 	}
 	
+		/**
+	* Edit user action
+	*/
+	public function editData(){
+		// load dashboard-model
+		$dash_model = $this->loadModel('DashboardModel');
+		// perform deleteUser() method in the Dashboard-Model
+		$result = $dash_model->procEditData();
+		
+		echo $result;
+	}
+	
+	/**
+	* Delete user action
+	*/
+	public function deleteData(){
+		// load dashboard-model
+		$dash_model = $this->loadModel('DashboardModel');
+		// perform deleteData() method in the Dashboard-Model
+		$result = $dash_model->procDeleteData();
+		
+		echo $result;
+	}
+	
 	/**
 	* PAGE: settings
 	* Settings page to edit user details
@@ -169,6 +193,36 @@ class Dashboard extends Controller{
 	public function broadcast(){
 		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/broadcast.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
+	public function faq(){
+		require 'application/views/_templates/header.php';
+		require 'application/views/_templates/faq.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
+	public function contact(){
+		require 'application/views/_templates/header.php';
+		require 'application/views/_templates/contact.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
+	public function aboutus(){
+		require 'application/views/_templates/header.php';
+		require 'application/views/_templates/aboutus.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
+	public function viewuploads(){
+		require 'application/views/_templates/header.php';
+		require 'application/views/dashboard/viewuploads.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
+	public function generatereports(){
+		require 'application/views/_templates/header.php';
+		require 'application/views/dashboard/generatereports.php';
 		require 'application/views/_templates/footer.php';
 	}
 	
