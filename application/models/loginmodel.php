@@ -4,6 +4,9 @@
 * @author Mello MP
 * Marabele Enterprise (Pty) Ltd.
 */
+
+header('Content-type: application/json');
+
 class LoginModel{
 	/**
 	* Every model needs a database connection, passed to the model
@@ -68,10 +71,8 @@ class LoginModel{
 			$_POST['user'] = strtolower($_POST['user']);
 		}
 		
-		echo "<script> alert('yebo'); </script>";
-		
 		/* Registration attempt */
-		$retval = $session->register($_POST['user'], $_POST['pass'], $_POST['email'], $_POST['user_level']);
+		$retval = $session->register($_POST['user'], $_POST['pass'], $_POST['confirm_pass'], $_POST['email'], $_POST['user_level']);
 		
 		/* Registration Successful */
 		if($retval == 0){
@@ -116,7 +117,7 @@ class LoginModel{
 			/* Make sure username is in database */
 			$subuser = stripslashes($subuser);
 			if(strlen($subuser) < 5 || strlen($subuser) > 30 || !preg_match("/^([0-9a-z])+$/", $subuser) || (!$database->usernameTaken($subuser))){
-				$form->setError($field, "* Username does not exist<br>");
+				$form->setError("user", "* Username does not exist<br>");
 			}
 		}
       
@@ -124,7 +125,8 @@ class LoginModel{
 		if($form->num_errors > 0){
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->getErrorArray();
-			return false;
+			
+			return json_encode(Array("response" => "false", "msg" => 'The Username: "'.$subuser.'" does not exist!!'));
 		}
 		/* Generate new password and email it to user */
 		else{
@@ -141,12 +143,13 @@ class LoginModel{
 				$database->updateUserField($subuser, "password", md5($newpass));
 				$_SESSION['forgotpass'] = true;
 				//return true;
-				return $email;
+				return json_encode(Array("response" => "true", "msg" => $email));
 			}
 			/* Email failure, do not change password */
 			else{
 				$_SESSION['forgotpass'] = false;
-				return false;
+				
+				return json_encode(Array("response" => "false", "msg" => "An Error occured while sending you an email, please try again later."));
 				//return "Email failure, do not change password";
 			}
 		}

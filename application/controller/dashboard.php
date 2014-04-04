@@ -24,18 +24,21 @@ class Dashboard extends Controller{
 	public function admin(){
 		// check whether user is an admin or not
 		global $session;
+		
+		if($session->isAdmin() || $session->isMaster()){
+			// load views
+			require 'application/views/_templates/header.php';
+			require 'application/views/dashboard/admin.php';
+			require 'application/views/_templates/footer.php';
+		}
+		
 		/**
 		* User not an administrator, redirect to main page
 		* automatically.
 		*/
-		if(!$session->isAdmin()){
+		else{
 			header('Location: '.URL);
 		}
-		
-		// else load views
-		require 'application/views/_templates/header.php';
-		require 'application/views/dashboard/admin.php';
-		require 'application/views/_templates/footer.php';
 	}
 	
 	/**
@@ -43,7 +46,7 @@ class Dashboard extends Controller{
 	*Monitor social networks and search the webcrawler
 	*/
 	public function monitor(){
-	
+		// load views
 		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/monitor.php';
 		require 'application/views/_templates/footer.php';
@@ -58,14 +61,7 @@ class Dashboard extends Controller{
 		// perform deleteUser() method in the Dashboard-Model
 		$result = $dash_model->procEditUserAccount();
 		
-		global $session;
-		if($result){
-			// has no form errors
-			header('Location: '.$session->referrer);
-		}else{
-			// has some form errors
-			header('Location: '.URL.'dashboard/settings');
-		}
+		echo $result;
 	}
 	
 	/**
@@ -161,10 +157,22 @@ class Dashboard extends Controller{
 	* Settings page to edit user details
 	*/
 	public function settings(){
-		// load views
-		require 'application/views/_templates/header.php';
-		require 'application/views/_templates/settings.php';
-		require 'application/views/_templates/footer.php';
+		global $session;
+		
+		if($session->isAdmin() || $session->isMaster() || $session->isAgent()){
+			// load views
+			require 'application/views/_templates/header.php';
+			require 'application/views/_templates/settings.php';
+			require 'application/views/_templates/footer.php';
+		}
+		
+		/**
+		* User not an administrator, redirect to main page
+		* automatically.
+		*/
+		else{
+			header('Location: '.URL);
+		}
 	}
 	
 	/**
@@ -179,6 +187,7 @@ class Dashboard extends Controller{
 	}
 	
 	public function upload(){
+		// load views
 		require 'application/views/_templates/header.php';
 		require 'application/views/dashboard/upload.php';
 		require 'application/views/_templates/footer.php';

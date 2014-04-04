@@ -188,7 +188,7 @@ if(!$session->logged_in){
 		</div> <!-- /#content -->
 	</div> <!-- /#wrapper -->
 	
-	<script src="<?php echo THEME; ?>js/libs/jquery-1.7.2.min.js"></script>
+	<!--script src="<?php echo THEME; ?>js/libs/jquery-1.7.2.min.js"></script-->
 	<script src="<?php echo THEME; ?>js/libs/jquery-ui-1.8.21.custom.min.js"></script>
 	<script src="<?php echo THEME; ?>js/libs/jquery.ui.touch-punch.min.js"></script>
 
@@ -200,5 +200,63 @@ if(!$session->logged_in){
 		$(function(){
 			Theme.init();
 			$("li#extras").addClass("active");
+		});
+	</script>
+	
+	<script>
+		$(document).ready(function(){
+			//This function turns form data into a json object
+			$.fn.serializeObject = function(){
+				var o = {};
+				var a = this.serializeArray();
+				$.each(a, function(){
+					if(o[this.name] !== undefined){
+						if(!o[this.name].push){
+							o[this.name] = [o[this.name]];
+						}
+						o[this.name].push(this.value || '');
+					}else{
+						o[this.name] = this.value || '';
+					}
+				});
+				return o;
+			}
+			
+			$("#edit-profile").submit(function(e){
+				e.preventDefault();
+				
+				$.ajax({
+					type: 'POST',
+					url: '<?php echo URL; ?>dashboard/editUserAccount',
+					data: $("#edit-profile").serializeObject(),
+					cache: false,	
+					success: function(result){
+						if(result.response == "true"){
+							$.msgAlert({
+								type: "success"
+								, title: "Success"
+								, text: result.msg
+							});
+							$("#password1").val("");
+							$("#password2").val("");
+						}else{
+							$.msgAlert({
+								type: "error"
+								, title: "Error"
+								, text: result.msg
+							});
+						}
+					},
+					error:function(error){
+						$.msgAlert ({
+							type: "error"
+							, title: "Error"
+							, text: "An Error occured while trying to update your profile details, please try again later. "+error.error
+						});
+					}
+				});
+				
+				return false;
+			});
 		});
 	</script>

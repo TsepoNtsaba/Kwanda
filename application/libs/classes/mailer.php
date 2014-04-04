@@ -36,13 +36,13 @@ class Mailer{
 		
 		$php_mailer->Body = "Welcome! You have just been registered as a client at Kwanda Media Portal "
 						."with the following information:\n\n"
-						."Username: ".$subuser."\n"
-						."Password: ".$subpass."\n\n"
+						."Username: ".$user."\n"
+						."Password: ".$pass."\n\n"
 						."If you ever lose or forget your password, a new "
 						."password will be generated for you and sent to this "
 						."email address, if you would like to change your "
 						."email address you can do so by going to the "
-						."My Settings page after signing in.\n\n"
+						."Settings page after signing in.\n\n"
 						."Please do not reply to this email as this is an automatically generated email :-) .\n\n"
 						."- Kwanda Media Portal";
 		
@@ -79,10 +79,46 @@ class Mailer{
 					."New Password: ".$pass."\n\n"
 					."It is recommended that you change your password "
 					."to something that is easier to remember, which "
-					."can be done by going to the My Settings page "
+					."can be done by going to the Settings page "
 					."after signing in.\n\n"
 					."Please do not reply to this email as this is an automatically generated email :-) .\n\n"
 					."- Kwanda Media Portal";
+		if(!$php_mailer->Send()){
+			//echo 'Message was not sent.';
+			//echo 'Mailer error: ' . $mailer->ErrorInfo;
+			return false;
+		}else{
+			//echo 'Message has been sent.';
+			return true;
+		}		
+	}
+	
+	/**
+	* sendNotification - Sends the newly generated report
+	* to the user's email address that was specified at
+	* upload.
+	*/
+	public function sendNotification($user, $email){
+		global $php_mailer;
+	     
+		$php_mailer->CharSet = "utf-8";
+		
+		$php_mailer->AddAddress($email);
+		
+		$php_mailer->Subject  = "Kwanda Media Portal - News Update!";
+		
+		$php_mailer->From = "info";
+		
+		$link = URL;
+		
+		$php_mailer->Body = "Hey ".$user.", \n\n"
+					."We've generated a new report for you "
+					.", you can access the report by "
+					."following the link to the Kwanda Media Portal below.\n\n"
+					.$link."\n\n"
+					."Please do not reply to this email as this is an automatically generated email :-) .\n\n"
+					."- Kwanda Media Portal";
+		
 		if(!$php_mailer->Send()){
 			//echo 'Message was not sent.';
 			//echo 'Mailer error: ' . $mailer->ErrorInfo;

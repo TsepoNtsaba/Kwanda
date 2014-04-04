@@ -41,10 +41,12 @@ class Login extends Controller{
 			// if is admin, then move user to dashboard/index
 			if($session->isAdmin()){
 				header('Location: '.URL.'dashboard/index');
+			}else if($session->isMaster()){
+				header('Location: '.URL.'dashboard/upload');
 			}
 			// user not an administrator, redirect to client page
 			else if($session->isAgent()){
-				header('Location: '.URL.'dashboard/index');
+				header('Location: '.URL.'dashboard/monitor');
 			}
 			else{
 				header('Location: '.URL);
@@ -75,7 +77,7 @@ class Login extends Controller{
 	*/
 	public function signup(){
 		// load login-model
-		$login_model = $this->loadModel('LoginModel');
+		//$login_model = $this->loadModel('LoginModel');
 		
 		//require 'application/views/_templates/header.php';
 		require 'application/views/login/signup.php';
