@@ -127,7 +127,7 @@ class Session{
 			$form->setError($field, "* Username not entered");
 		}else{
 			/* Check if username is not alphanumeric */
-			if(!eregi("^([0-9a-z])*$", $subuser)){
+			if(!preg_match("/^([0-9a-z])*$/", $subuser)){
 				$form->setError($field, "* Username not alphanumeric");
 			}
 		}
@@ -232,7 +232,7 @@ class Session{
 	* 1. If no errors were found, it registers the new user and
 	* returns 0. Returns 2 if registration failed.
 	*/
-	function register($subuser, $subpass, $subemail, $sublevel){
+	function register($subuser, $subpass, $subconfirm, $subemail, $sublevel){
 		global $database, $form, $mailer;  //The database, form and mailer object
       
 		/* Username error checking */
@@ -246,7 +246,7 @@ class Session{
 				$form->setError($field, "* Username below 5 characters");
 			}else if(strlen($subuser) > 30){
 				$form->setError($field, "* Username above 30 characters");
-			}else if(!eregi("^([0-9a-z_])+$", $subuser)){ /* Check if username is not alphanumeric */
+			}else if(!preg_match("/^([0-9a-z_])+$/", $subuser)){ /* Check if username is not alphanumeric */
 				$form->setError($field, "* Username not alphanumeric");
 			}
 			/* Check if username is reserved */
@@ -274,8 +274,27 @@ class Session{
 				$form->setError($field, "* Password too short");
 			}
 			/* Check if password is not alphanumeric */
-			else if(!eregi("^([0-9a-z])+$", ($subpass = trim($subpass)))){
+			else if(!preg_match("/^([0-9a-z])+$/", ($subpass = trim($subpass)))){
 				$form->setError($field, "* Password not alphanumeric");
+			}
+			/**
+			* Note: I trimmed the password only after I checked the length
+			* because if you fill the password field up with spaces
+			* it looks like a lot more characters than 4, so it looks
+			* kind of stupid to report "password too short".
+			*/
+		}
+		
+		/* Confirm Password error checking */
+		$field = "confirm_pass";  //Use field name for password
+		if(!$subconfirm){
+			$form->setError($field, "* Please confirm password");
+		}else{
+			/* Spruce up password and check length*/
+			$subconfirm = stripslashes($subconfirm);
+			
+			if($subconfirm != $subpass){
+				$form->setError($field, "* Passwords do not match!");
 			}
 			/**
 			* Note: I trimmed the password only after I checked the length
@@ -291,10 +310,10 @@ class Session{
 			$form->setError($field, "* Email not entered");
 		}else{
 			/* Check if valid email address */
-			$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
+			$regex = "/^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
 				."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
-				."\.([a-z]{2,}){1}$";
-			if(!eregi($regex,$subemail)){
+				."\.([a-z]{2,}){1}$/";
+			if(!preg_match($regex,$subemail)){
 				$form->setError($field, "* Email invalid");
 			}
 			$subemail = stripslashes($subemail);
@@ -311,37 +330,10 @@ class Session{
 				$group = "Employee";
 				if($database->addNewMaster($subuser, md5($subpass), $subid, $subemail, $group)){
 					if(EMAIL_WELCOME){
-						$mailer->CharSet = "utf-8";
-						//$mailer->IsSMTP();  // telling the class to use SMTP
-						//$mailer->Host     = "smtp.example.com"; // SMTP server
-						
-						$mailer->From     = EMAIL_FROM_NAME;
-						$mailer->AddAddress(EMAIL_FROM_ADDR);
-						
-						$mailer->Subject  = "Registration on Kwanda Media Portal";
-						$mailer->Body     = "Welcome! You have just been registered as a client at Kwanda Media Portal "
-										."with the following information:\n\n"
-										."Username: ".$subuser."\n"
-										."Password: ".$subpass."\n\n"
-										."If you ever lose or forget your password, a new "
-										."password will be generated for you and sent to this "
-										."email address, if you would like to change your "
-										."email address you can do so by going to the "
-										."My Settings page after signing in.\n\n"
-										."- Kwanda Media Portal";
-						
-						//$mailer->WordWrap = 50;
-						
-						if(!$mailer->Send()){
-							//echo 'Message was not sent.';
-							//echo 'Mailer error: ' . $mailer->ErrorInfo;
-							return 3;
-						}else{
-							//echo 'Message has been sent.';
+						if(!$mailer->sendWelcome($subuser,$subemail,$subpass)){
+							return 2;
 						}
-						
-						//$mailer->sendWelcome($subuser,$subemail,$subpass);
-					}
+					}	
 					return 0;  //New user added succesfully
 				}else{
 					return 2;  //Registration attempt failed
@@ -351,36 +343,9 @@ class Session{
 				$group = "Client";
 				if($database->addNewAgent($subuser, md5($subpass), $subid, $subemail, $group)){
 					if(EMAIL_WELCOME){
-						$mailer->CharSet = "utf-8";
-						//$mailer->IsSMTP();  // telling the class to use SMTP
-						//$mailer->Host     = "smtp.example.com"; // SMTP server
-						
-						$mailer->From     = EMAIL_FROM_NAME;
-						$mailer->AddAddress(EMAIL_FROM_ADDR);
-						
-						$mailer->Subject  = "Registration on Kwanda Media Portal";
-						$mailer->Body     = "Welcome! You have just been registered as a client at Kwanda Media Portal "
-										."with the following information:\n\n"
-										."Username: ".$subuser."\n"
-										."Password: ".$subpass."\n\n"
-										."If you ever lose or forget your password, a new "
-										."password will be generated for you and sent to this "
-										."email address, if you would like to change your "
-										."email address you can do so by going to the "
-										."My Settings page after signing in.\n\n"
-										."- Kwanda Media Portal";
-						
-						//$mailer->WordWrap = 50;
-						
-						if(!$mailer->Send()){
-							//echo 'Message was not sent.';
-							//echo 'Mailer error: ' . $mailer->ErrorInfo;
-							return 3;
-						}else{
-							//echo 'Message has been sent.';
+						if(!$mailer->sendWelcome($subuser,$subemail,$subpass)){
+							return 2;
 						}
-						
-						//$mailer->sendWelcome($subuser,$subemail,$subpass);
 					}
 					return 0;  //New user added succesfully
 				}else{
@@ -406,7 +371,7 @@ class Session{
 				$form->setError($field, "* Username above 30 characters");
 			}
 			/* Check if username is not alphanumeric */
-			else if(!eregi("^([0-9a-z])+$", $subuser)){
+			else if(!preg_match("/^([0-9a-z])+$/", $subuser)){
 				$form->setError($field, "* Username not alphanumeric");
 			}
 			/* Check if username is reserved */
@@ -451,10 +416,10 @@ class Session{
 			$form->setError($field, "* Email not entered");
 		}else{
 			/* Check if valid email address */
-			$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
+			$regex = "/^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
 				."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
-				."\.([a-z]{2,}){1}$";
-			if(!eregi($regex,$subemail)){
+				."\.([a-z]{2,}){1}$/";
+			if(!preg_match($regex,$subemail)){
 				$form->setError($field, "* Email invalid");
 			}
 			$subemail = stripslashes($subemail);
@@ -524,7 +489,7 @@ class Session{
 				$form->setError($field, "* Password too short");
 			}
 			/* Check if password is not alphanumeric */
-			else if(!eregi("^([0-9a-z])+$", ($subpass = trim($subpass)))){
+			else if(!preg_match("/^([0-9a-z])+$/", ($subpass = trim($subpass)))){
 				$form->setError($field, "* Password not alphanumeric");
 			}
 			/**
@@ -541,10 +506,10 @@ class Session{
 			$form->setError($field, "* Email not entered");
 		}else{
 			/* Check if valid email address */
-			$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
+			$regex = "/^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
 				."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
-				."\.([a-z]{2,}){1}$";
-			if(!eregi($regex,$subemail)){
+				."\.([a-z]{2,}){1}$/";
+			if(!preg_match($regex,$subemail)){
 				$form->setError($field, "* Email invalid");
 			}
 			$subemail = stripslashes($subemail);
@@ -586,7 +551,7 @@ class Session{
 				$form->setError($field, "* Username above 30 characters");
 			}
 			/* Check if username is not alphanumeric */
-			else if(!eregi("^([0-9a-z])+$", $subuser)){
+			else if(!preg_match("/^([0-9a-z])+$/", $subuser)){
 				$form->setError($field, "* Username not alphanumeric");
 			}
 			/* Check if username is reserved */
@@ -614,7 +579,7 @@ class Session{
 				$form->setError($field, "* Password too short");
 			}
 			/* Check if password is not alphanumeric */
-			else if(!eregi("^([0-9a-z])+$", ($subpass = trim($subpass)))){
+			else if(!preg_match("/^([0-9a-z])+$/", ($subpass = trim($subpass)))){
 				$form->setError($field, "* Password not alphanumeric");
 			}
 			/**
@@ -631,10 +596,10 @@ class Session{
 			$form->setError($field, "* Email not entered");
 		}else{
 			/* Check if valid email address */
-			$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
+			$regex = "/^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
 				."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
-				."\.([a-z]{2,}){1}$";
-			if(!eregi($regex,$subemail)){
+				."\.([a-z]{2,}){1}$/";
+			if(!preg_match($regex,$subemail)){
 				$form->setError($field, "* Email invalid");
 			}
 			$subemail = stripslashes($subemail);
@@ -676,7 +641,7 @@ class Session{
 			}else{
 				/* Check if password too short or is not alphanumeric */
 				$subcurpass = stripslashes($subcurpass);
-				if(strlen($subcurpass) < 4 || !eregi("^([0-9a-z])+$", ($subcurpass = trim($subcurpass)))){
+				if(strlen($subcurpass) < 4 || !preg_match("/^([0-9a-z])+$/", ($subcurpass = trim($subcurpass)))){
 					$form->setError($field, "* Current Password incorrect");
 				}
 				/* Password entered is incorrect */
@@ -693,7 +658,7 @@ class Session{
 				$form->setError($field, "* New Password too short");
 			}
 			/* Check if password is not alphanumeric */
-			else if(!eregi("^([0-9a-z])+$", ($subnewpass = trim($subnewpass)))){
+			else if(!preg_match("/^([0-9a-z])+$/", ($subnewpass = trim($subnewpass)))){
 				$form->setError($field, "* New Password not alphanumeric");
 			}
 		}
@@ -708,10 +673,10 @@ class Session{
 		$field = "email";  //Use field name for email
 		if($subemail && strlen($subemail = trim($subemail)) > 0){
 			/* Check if valid email address */
-			$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
+			$regex = "/^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
 				."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
-				."\.([a-z]{2,}){1}$";
-			if(!eregi($regex,$subemail)){
+				."\.([a-z]{2,}){1}$/";
+			if(!preg_match($regex,$subemail)){
 				$form->setError($field, "* Email invalid");
 			}
 			$subemail = stripslashes($subemail);

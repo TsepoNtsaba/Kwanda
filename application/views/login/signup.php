@@ -14,15 +14,15 @@
 	 * The user has submitted the registration form and the
 	 * results have been processed.
 	 */
-	if(isset($_SESSION['regsuccess'])){
+	/*if(isset($_SESSION['regsuccess'])){
 		/* Registration was successful */
-		if($_SESSION['regsuccess']){
+	/*	if($_SESSION['regsuccess']){
 			echo "<h1>Registered!</h1>";
 			echo "<p>Thank you <b>".$_SESSION['reguname']."</b>, your information has been added to the database, "
 			."you may now <a href='".URL."'>log in</a>.</p>";
 		}
 		/* Registration failed */
-		else{
+	/*	else{
 			echo "<h1>Registration Failed</h1>";
 			echo "<p>We're sorry, but an error has occurred and your registration for the username <b>".$_SESSION['reguname']."</b>, "
 			."could not be completed.<br>Please try again at a later time.</p>";
@@ -38,7 +38,7 @@
 	* of the input fields are important and should not
 	* be changed.
 	*/
-	else{
+	//else{
 ?>
 <!DOCTYPE HTML>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -48,7 +48,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Registration | Dashboard</title>
+	<title>Registration | Kwanda Media Portal</title>
 	
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -122,7 +122,7 @@
 				
 				<div class="field">
 					<label for="email">Email Address:</label>
-					<input type="text" id="email" name="email" maxlength="50" placeholder="Email" class="login" value="<?php echo $form->value("email"); ?>" required /> <?php echo $form->error("email"); ?>
+					<input type="text" id="email" name="email" maxlength="50" placeholder="Email" class="login" value="<?php echo $form->value("email"); ?>" required pattern="^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]{1,})*\.([a-z]{2,}){1}$" /> <?php echo $form->error("email"); ?>
 				</div> <!-- /field -->
 				
 				<div class="field">
@@ -138,7 +138,10 @@
 				<div class="field">
 					<label for="user_level">User Level:</label>
 					<select id="user_level" name="user_level" required >
-						<option value="<?php echo MASTER_LEVEL; ?>" >Employee</option><option value="<?php echo AGENT_LEVEL; ?>" >Client</option>
+						<?php if($session->isAdmin()){ ?>
+						<option value="<?php echo MASTER_LEVEL; ?>" >Employee</option>
+						<?php } ?>
+						<option value="<?php echo AGENT_LEVEL; ?>" >Client</option>
 					</select>
 				</div> <!-- /field -->
 				
@@ -185,5 +188,5 @@
 </html>
 
 <?php
-	}
+	//}
 ?>

@@ -1,5 +1,5 @@
 <style>
-	#broadcastBar, pressBar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+	#broadcastBar, #pressBar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
 	#broadcastPercent, #pressPercent { position:relative; display:inline-block; top:3px; left:48%; }
 </style>
 <?php
@@ -216,11 +216,11 @@ global $session, $form;
 			Theme.init ();
 			$("li#upload").addClass("active");
 			
-			$("option.clients").each(function(){
+			/*$("option.clients").each(function(){
 				$(this).text(function(i, oldText){
 					return $(this)[0].value.toUpperCase();
 				});
-			});
+			});*/
 		});
 	</script>
 	

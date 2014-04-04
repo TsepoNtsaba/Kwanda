@@ -37,7 +37,7 @@ class UploadModel{
 	* Upload file and its metadata
 	*/
 	public function uploadPress(){
-		global $session, $form;
+		global $session, $form, $mailer, $database;
 		$result = 1;
 		
 		if(isset($_FILES["file"])){ //processes the file that was uploaded
@@ -120,7 +120,14 @@ class UploadModel{
 		
 		// Upload meta-data successful
 		if($result == 0){
-			return json_encode(Array("response" => "true", "msg" => "Upload Successful"));
+			/* Get email of user */
+			$userinfo = $database->getUserInfo($client);
+			$email  = $userinfo['email'];
+			
+			/* Attempt to send the email notification */
+			if($mailer->sendNotification($client, $email)){
+				return json_encode(Array("response" => "true", "msg" => "Upload Successful, notification has been sent to ".$client));
+			}
 		}
 		
 		// Error found with form

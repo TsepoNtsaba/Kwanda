@@ -156,7 +156,8 @@ class MySQLDB{
 	function addNewMaster($username, $password, $userid, $email, $parent_directory){  
 		//$time = time();
 		$ulevel = MASTER_LEVEL;   //8
-		$q = "INSERT INTO ".TBL_USERS." VALUES ('$username', '$password', '$userid', $ulevel, '$email', '$parent_directory')";
+		$q = "INSERT INTO ".TBL_USERS." (username, password, userid, userlevel, email, parent_directory)
+			VALUES ('$username', '$password', '$userid', $ulevel, '$email', '$parent_directory')";
 		return mysql_query($q, $this->connection); 
 	}
    
@@ -165,7 +166,7 @@ class MySQLDB{
 	function addNewAgent($username, $password, $userid, $email, $parent_directory){ 
 		//$time = time();
 		$ulevel = AGENT_LEVEL;   //1
-		$q = "INSERT INTO ".TBL_USERS." (username, password, userid, userlevel, email, timestamp, parent_directory) 
+		$q = "INSERT INTO ".TBL_USERS." (username, password, userid, userlevel, email, parent_directory) 
 			VALUES ('$username', '$password', '$userid', $ulevel, '$email', '$parent_directory')";
 		return mysql_query($q, $this->connection); 
 	}

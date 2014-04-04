@@ -19,36 +19,27 @@
 	<script type="text/javascript" src="<?php echo THEME; ?>plugins/lightbox/js/jquery.min.js"></script><!--lightbox-->
 	
 	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>plugins/lightbox/js/lightbox/themes/facebook/jquery.lightbox.css" /><!--lightbox-->
-	
 	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>plugins/msgbox/javascript/msgbox/jquery.msgbox.css" /><!--messagebox-->
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>plugins/msgAlert/css/msgAlert.css" charset="utf-8" /><!--MessageAlert-->
 	
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/bootstrap-responsive.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/ui-lightness/jquery-ui-1.8.21.custom.css">	
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/application.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/application-black-orange.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/pages/dashboard.css">
+	
+	<!--script type="text/javascript" src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo RESOURCES; ?>js/jquery.form.js"></script-->
+	
+	<script type="text/javascript" src="<?php echo THEME; ?>js/jquery.form.js"></script>
+	
+	<script type="text/javascript" src="<?php echo THEME; ?>js/libs/modernizr-2.5.3.min.js"></script>
 	<script type="text/javascript" src="<?php echo THEME; ?>plugins/lightbox/js/lightbox/jquery.lightbox.min.js"></script><!--lightbox-->
-	
 	<script type="text/javascript" src="<?php echo THEME; ?>plugins/msgbox/javascript/msgbox/jquery.msgbox.min.js"></script><!--messagebox-->
-	
-	<link rel="stylesheet" href="<?php echo THEME; ?>plugins/msgAlert/css/msgAlert.css" type="text/css" charset="utf-8" /><!--MessageAlert-->
-	
-	<script src="<?php echo THEME; ?>plugins/msgAlert/js/msgAlert.js"></script><!--MessageAlert-->
-	
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
-	<link rel="stylesheet" href="<?php echo THEME; ?>css/font-awesome.css">
-	
-	<link rel="stylesheet" href="<?php echo THEME; ?>css/bootstrap.css">
-	<link rel="stylesheet" href="<?php echo THEME; ?>css/bootstrap-responsive.css">
-
-	<link rel="stylesheet" href="<?php echo THEME; ?>css/ui-lightness/jquery-ui-1.8.21.custom.css">	
-	
-	<link rel="stylesheet" href="<?php echo THEME; ?>css/application.css">
-	
-	<link rel="stylesheet" href="<?php echo THEME; ?>css/application-black-orange.css">
-	<link rel="stylesheet" href="<?php echo THEME; ?>css/pages/dashboard.css">
-	
-	<script src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
-	<script src="<?php echo RESOURCES; ?>js/jquery.form.js"></script>
-	
-	<script src="<?php echo THEME; ?>js/jquery.form.js"></script>
-	
-	<script src="<?php echo THEME; ?>js/libs/modernizr-2.5.3.min.js"></script>
+	<script type="text/javascript" src="<?php echo THEME; ?>plugins/msgAlert/js/msgAlert.js"></script><!--MessageAlert-->
 </head>
 
 <body>	
@@ -94,12 +85,14 @@
 	
 				<div class="nav-collapse">
 					<ul id="main-nav" class="nav pull-right">
+						<?php if($session->isAdmin()){ ?>
 						<li id="portal" class="nav-icon">
 							<a href="<?php echo URL; ?>dashboard/index">
 								<i class="icon-home"></i>
 								<span>Home</span>        					
 							</a>
 						</li>
+						<?php } ?>
 						
 						<?php if($session->isAdmin() || $session->isMaster()){ ?>
 							<li id="upload">					
@@ -204,7 +197,7 @@
 				
 							<ul class="dropdown-menu">							
 								<!--li><a href="./login.html">Login</a></li-->
-								<?php if($session->isAdmin()){ ?>
+								<?php if($session->isAdmin() ||$session->isMaster()){ ?>
 									<li><a href="<?php echo URL; ?>login/signup/">Signup a User</a></li>
 								<?php } ?>
 								<!--li><a href="./error.html">Error</a></li-->

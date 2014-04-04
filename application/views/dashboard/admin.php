@@ -27,9 +27,15 @@
  global $session, $database, $form;
  
 function displayUsers(){
-	global $database;
-	$q = "SELECT * "
-		."FROM ".TBL_USERS." ORDER BY userlevel DESC,username";
+	global $session, $database;
+	
+	if($session->isAdmin()){
+		$q = "SELECT * "
+			."FROM ".TBL_USERS." ORDER BY userlevel DESC,username";
+	}else{
+		$q = "SELECT * "
+			."FROM ".TBL_USERS." WHERE userlevel = 1 ORDER BY userlevel DESC,username";
+	}
 	
 	$result = $database->query($q);
 	/* Error occurred, return given name by default */
@@ -56,18 +62,20 @@ function displayUsers(){
 		$email  = mysql_result($result,$i,"email");
 		$time   = mysql_result($result,$i,"timestamp");
 		$parent = mysql_result($result,$i,"parent_directory");
-
-		echo "<tr>
-				<td style='display: none'><span class='fieldText txtUid'> $uid</span><input type='text' value='$uid'  class='fieldEdit tbxUid' style='display: none' /></td>
-				<td><span class='fieldText txtUsername'> $uname</span><input type='text' value='$uname'  class='fieldEdit tbxUsername' style='display: none' /></td>
-				<td style='display: none'><span class='fieldText txtPassword'> $upass</span><input type='text' value='$upass'  class='fieldEdit tbxPassword' style='display: none' /></td>
-				<td style='display: none'><span class='fieldText txtUserid'> $userid</span><input type='text' value='$userid'  class='fieldEdit tbxUserid' style='display: none' /></td>
-				<td><span class='fieldText txtLevel' >$ulevel</span><input type='text' value='$ulevel'  class='fieldEdit tbxLevel' style='display: none' /></td>
-				<td><span class='fieldText txtEmail' >$email</span><input type='text' value='$email' class='fieldEdit tbxEmail' style='display: none' /></td>
-				<td style='display: none'><span class='fieldText txtTime'> $time</span><input type='text' value='$time'  class='fieldEdit tbxTime' style='display: none' /></td>
-				<td><span class='fieldText txtGroup' >$parent</span><input type='text' value='$parent' class='fieldEdit tbxGroup' style='display: none' /></td>
-				<td><a class='del btn btn-small btn-secondary' id='$uname' href='".URL."dashboard/deleteUser'><span>delete</span></a></td><td><a class='ban btn btn-small btn-secondary' id='$uid' href=''><span>ban</span></a></td><td><a class='edit btn btn-small btn-secondary' href=''><span>edit</span></a><a class='save btn btn-small btn-secondary' href='' style='display: none' ><span>save</span></a></td>
-			</tr>";
+		
+		if($ulevel != 9){
+			echo "<tr>
+					<td style='display: none'><span class='fieldText txtUid'> $uid</span><input type='text' value='$uid'  class='fieldEdit tbxUid' style='display: none' /></td>
+					<td><span class='fieldText txtUsername'> $uname</span><input type='text' value='$uname'  class='fieldEdit tbxUsername' style='display: none' /></td>
+					<td style='display: none'><span class='fieldText txtPassword'> $upass</span><input type='text' value='$upass'  class='fieldEdit tbxPassword' style='display: none' /></td>
+					<td style='display: none'><span class='fieldText txtUserid'> $userid</span><input type='text' value='$userid'  class='fieldEdit tbxUserid' style='display: none' /></td>
+					<td><span class='fieldText txtLevel' >$ulevel</span><input type='text' value='$ulevel'  class='fieldEdit tbxLevel' style='display: none' /></td>
+					<td><span class='fieldText txtEmail' >$email</span><input type='text' value='$email' class='fieldEdit tbxEmail' style='display: none' /></td>
+					<td style='display: none'><span class='fieldText txtTime'> $time</span><input type='text' value='$time'  class='fieldEdit tbxTime' style='display: none' /></td>
+					<td><span class='fieldText txtGroup' >$parent</span><input type='text' value='$parent' class='fieldEdit tbxGroup' style='display: none' /></td>
+					<td><a class='del btn btn-small btn-secondary' id='$uname' href='".URL."dashboard/deleteUser'><span>delete</span></a></td><td><a class='ban btn btn-small btn-secondary' id='$uid' href=''><span>ban</span></a></td><td><a class='edit btn btn-small btn-secondary' href=''><span>edit</span></a><a class='save btn btn-small btn-secondary' href='' style='display: none' ><span>save</span></a></td>
+				</tr>";
+		}
 	}
 	echo "</tbody><br>";
 }
@@ -78,9 +86,15 @@ function displayUsers(){
  * database table in a nicely formatted html table.
  */
 function displayBannedUsers(){
-	global $database;
-	$q = "SELECT * "
-		."FROM ".TBL_BANNED_USERS." ORDER BY userlevel DESC, username";
+	global $session, $database;
+	
+	if($session->isAdmin()){
+		$q = "SELECT * "
+			."FROM ".TBL_BANNED_USERS." ORDER BY userlevel DESC, username";
+	}else{
+		$q = "SELECT * "
+			."FROM ".TBL_BANNED_USERS." WHERE userlevel = 1 ORDER BY userlevel DESC,username";
+	}
 	
 	$result = $database->query($q);
 	/* Error occurred, return given name by default */
@@ -106,18 +120,20 @@ function displayBannedUsers(){
 		$email  = mysql_result($result,$i,"email");
 		$time   = mysql_result($result,$i,"timestamp");
 		$parent = mysql_result($result,$i,"parent_directory");
-
-		echo "<tr>
-				<td style='display: none'><span class='fieldText txtUid'> $uid</span><input type='text' value='$uid'  class='fieldEdit tbxUid' style='display: none' /></td>
-				<td><span class='fieldText txtUsername'> $uname</span><input type='text' value='$uname'  class='fieldEdit tbxUsername' style='display: none' /></td>
-				<td style='display: none'><span class='fieldText txtPassword'> $upass</span><input type='text' value='$upass'  class='fieldEdit tbxPassword' style='display: none' /></td>
-				<td style='display: none'><span class='fieldText txtUserid'> $userid</span><input type='text' value='$userid'  class='fieldEdit tbxUserid' style='display: none' /></td>
-				<td><span class='fieldText txtLevel' >$ulevel</span><input type='text' value='$ulevel'  class='fieldEdit tbxLevel' style='display: none' /></td>
-				<td><span class='fieldText txtEmail' >$email</span><input type='text' value='$email' class='fieldEdit tbxEmail' style='display: none' /></td>
-				<td><span class='fieldText txtGroup' >$parent</span><input type='text' value='$parent' class='fieldEdit tbxGroup' style='display: none' /></td>
-				<td><span class='fieldText txtTime'> $time</span><input type='text' value='$time'  class='fieldEdit tbxTime' style='display: none' /></td>
-				<td><a class='del btn btn-small btn-secondary' id='$uname' href='".URL."dashboard/deleteUser'><span>delete</span></a></td><td><a class='activate btn btn-small btn-secondary' id='$uid' href=''><span>activate</span></a></td><td><a class='edit btn btn-small btn-secondary' href=''><span>edit</span></a><a class='save btn btn-small btn-secondary' href='' style='display: none' ><span>save</span></a></td>
-			</tr>";
+		
+		if($ulevel != 9){
+			echo "<tr>
+					<td style='display: none'><span class='fieldText txtUid'> $uid</span><input type='text' value='$uid'  class='fieldEdit tbxUid' style='display: none' /></td>
+					<td><span class='fieldText txtUsername'> $uname</span><input type='text' value='$uname'  class='fieldEdit tbxUsername' style='display: none' /></td>
+					<td style='display: none'><span class='fieldText txtPassword'> $upass</span><input type='text' value='$upass'  class='fieldEdit tbxPassword' style='display: none' /></td>
+					<td style='display: none'><span class='fieldText txtUserid'> $userid</span><input type='text' value='$userid'  class='fieldEdit tbxUserid' style='display: none' /></td>
+					<td><span class='fieldText txtLevel' >$ulevel</span><input type='text' value='$ulevel'  class='fieldEdit tbxLevel' style='display: none' /></td>
+					<td><span class='fieldText txtEmail' >$email</span><input type='text' value='$email' class='fieldEdit tbxEmail' style='display: none' /></td>
+					<td><span class='fieldText txtGroup' >$parent</span><input type='text' value='$parent' class='fieldEdit tbxGroup' style='display: none' /></td>
+					<td><span class='fieldText txtTime'> $time</span><input type='text' value='$time'  class='fieldEdit tbxTime' style='display: none' /></td>
+					<td><a class='del btn btn-small btn-secondary' id='$uname' href='".URL."dashboard/deleteUser'><span>delete</span></a></td><td><a class='activate btn btn-small btn-secondary' id='$uid' href=''><span>activate</span></a></td><td><a class='edit btn btn-small btn-secondary' href=''><span>edit</span></a><a class='save btn btn-small btn-secondary' href='' style='display: none' ><span>save</span></a></td>
+				</tr>";
+		}
 	}
 	echo "</tbody><br>\n";
 }
@@ -142,7 +158,7 @@ function displayBannedUsers(){
 		<font size="5" color="#ff0000">
 			<b>::::::::::::::::::::::::::::::::::::::::::::</b>
 		</font>
-		<font size="4">Logged in as <b><?php echo $session->username; ?></b></font><br><br>
+		<font size="4">Logged in as <b><?php //echo $session->username; ?></b></font><br><br>
 		Back to [<a href="../index.php">Main Page</a>]<br><br-->
 	
 		<div id="content">

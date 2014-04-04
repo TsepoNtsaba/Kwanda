@@ -33,15 +33,21 @@ class DashboardModel{
 		if($retval){
 			$_SESSION['useredit'] = true;
 			//header("Location: ".$session->referrer);
-			return true;
+			return json_encode(Array("response" => "true", "msg" => "Your profile details have been updated successfully."));
 		}
 		/* Error found with form */
 		else{
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->getErrorArray();
 			//header("Location: ".$session->referrer);
+			$error = $form->error("email");
+			if(!$error || $error == ""){
+				$error = $form->error("curpass");
+				if(!$error || $error == "")
+					$error = $form->error("newpass");
+			}
 			
-			return false;
+			return json_encode(Array("response" => "false", "msg" => $error));
 		}
 	}
 	
