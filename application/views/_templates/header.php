@@ -22,7 +22,6 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>plugins/msgbox/javascript/msgbox/jquery.msgbox.css" /><!--messagebox-->
 	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>plugins/msgAlert/css/msgAlert.css" charset="utf-8" /><!--MessageAlert-->
 	
-<<<<<<< HEAD
 	<script type="text/javascript" src="<?php echo THEME; ?>plugins/lightbox/js/lightbox/jquery.lightbox.min.js"></script><!--lightbox-->
 	
 	<script type="text/javascript" src="<?php echo THEME; ?>plugins/msgbox/javascript/msgbox/jquery.msgbox.min.js"></script><!--messagebox-->
@@ -46,7 +45,7 @@
 	
 	<!--<script src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
 	<script src="<?php echo RESOURCES; ?>js/jquery.form.js"></script>-->
-=======
+
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
 	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/bootstrap.css">
@@ -58,7 +57,6 @@
 	
 	<!--script type="text/javascript" src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo RESOURCES; ?>js/jquery.form.js"></script-->
->>>>>>> 166d2dfb4fd65f4906431f4accc52400b26bb822
 	
 	<script type="text/javascript" src="<?php echo THEME; ?>js/jquery.form.js"></script>
 	
@@ -120,7 +118,7 @@
 						</li>
 						<?php } ?>
 						
-						<?php if($session->isAdmin()){ ?>
+						<?php if($session->isAdmin() || $session->isMaster()){ ?>
 							<li id="upload">					
 								<a href="<?php echo URL; ?>dashboard/upload">
 									<i class="icon-upload"></i>
