@@ -45,10 +45,32 @@
 	
 	<!--<script src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
 	<script src="<?php echo RESOURCES; ?>js/jquery.form.js"></script>-->
+<<<<<<< HEAD
 	
 	<script src="<?php echo THEME; ?>js/jquery.form.js"></script>
 	
 	<script src="<?php echo THEME; ?>js/libs/modernizr-2.5.3.min.js"></script>
+=======
+
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/bootstrap-responsive.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/ui-lightness/jquery-ui-1.8.21.custom.css">	
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/application.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/application-black-orange.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo THEME; ?>css/pages/dashboard.css">
+	
+	<!--script type="text/javascript" src="<?php echo RESOURCES; ?>js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo RESOURCES; ?>js/jquery.form.js"></script-->
+	
+	<script type="text/javascript" src="<?php echo THEME; ?>js/jquery.form.js"></script>
+	
+	<script type="text/javascript" src="<?php echo THEME; ?>js/libs/modernizr-2.5.3.min.js"></script>
+	<script type="text/javascript" src="<?php echo THEME; ?>plugins/lightbox/js/lightbox/jquery.lightbox.min.js"></script><!--lightbox-->
+	<script type="text/javascript" src="<?php echo THEME; ?>plugins/msgbox/javascript/msgbox/jquery.msgbox.min.js"></script><!--messagebox-->
+	<script type="text/javascript" src="<?php echo THEME; ?>plugins/msgAlert/js/msgAlert.js"></script><!--MessageAlert-->
+>>>>>>> 29376d86f82b7aecb6ab67b3a5bc1ab5956f1d62
 </head>
 
 <body>	
@@ -101,7 +123,7 @@
 							</a>
 						</li>
 						
-						<?php if($session->isAdmin()){ ?>
+						<?php if($session->isAdmin() || $session->isMaster()){ ?>
 							<li id="upload">					
 								<a href="<?php echo URL; ?>dashboard/upload">
 									<i class="icon-upload"></i>
