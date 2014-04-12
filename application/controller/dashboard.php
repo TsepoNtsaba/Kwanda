@@ -235,6 +235,14 @@ class Dashboard extends Controller{
 		require 'application/views/_templates/footer.php';
 	}
 	
+	public function reviewUpload($pid){
+		global $session;
+		$session->pid = $pid;
+		require 'application/views/_templates/header.php';
+		require 'application/views/dashboard/reviewUpload.php';
+		require 'application/views/_templates/footer.php';
+	}
+	
 	public function uploadPress(){
 		// run the uploadPress() method in the login-model
 		$upload_model = $this->loadModel('UploadModel');
@@ -252,5 +260,50 @@ class Dashboard extends Controller{
 		$upload_successful = $upload_model->uploadBroadcast();
 		
 		echo $upload_successful;
+	}
+	
+	public function uploadReview(){
+		// run the uploadPress() method in the login-model
+		$upload_model = $this->loadModel('UploadModel');
+		// perform the login method and put result into $upload_successful
+		$upload_successful = $upload_model->uploadReview();
+		
+		echo $upload_successful;
+	}
+	
+	public function contactAdmins(){
+		// run the uploadPress() method in the login-model
+		$upload_model = $this->loadModel('UploadModel');
+		// perform the login method and put result into $upload_successful
+		$upload_successful = $upload_model->contactAdmins();
+		
+		echo $upload_successful;
+	}
+	
+	public function searchArticle(){
+		// run the uploadPress() method in the login-model
+		$analysis_model = $this->loadModel('AnalysisModel');
+		// perform the login method and put result into $upload_successful
+		$analysis_successful = $analysis_model->searchArticle();
+		
+		echo $analysis_successful;
+	}
+	
+	public function getGeneratedReports(){
+		// run the uploadPress() method in the login-model
+		$analysis_model = $this->loadModel('AnalysisModel');
+		// perform the login method and put result into $upload_successful
+		$analysis_successful = $analysis_model->generateReports();
+		
+		echo $analysis_successful;
+	}
+	
+	public function getReportsList(){
+		// run the uploadPress() method in the login-model
+		$analysis_model = $this->loadModel('AnalysisModel');
+		// perform the login method and put result into $upload_successful
+		$analysis_successful = $analysis_model->getReportsList();
+		
+		echo $analysis_successful;
 	}
 }

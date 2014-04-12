@@ -41,8 +41,7 @@ function displayMetaData(){
 		echo "Database table empty";
 		return;
 	}
-	
-	
+
 	/* Display table contents */
 	//echo "<table class='table table-bordered table-striped table-highlight'>";
 	echo "<table class='metadataTable table table-bordered table-striped table-highlight'>
@@ -66,7 +65,7 @@ function displayMetaData(){
 				<td><span class='fieldText txtdaterecieved' >$daterecieved</span><input type='text' value='$daterecieved'  class='fieldEdit tbxdaterecieved' style='display: none' /></td>
 				<td><span class='fieldText txtarticletext' >$articletext</span><textarea class='fieldEdit tbxarticletext' style='display: none'>$articletext</textarea></td>
 				<td><a class='del btn btn-small btn-secondary' id='$pid' href='".URL."dashboard/deleteUpload'><span>delete</span></a></td>
-				<td><a class='activate btn btn-small btn-secondary' id='$pid' href=''><span>review</span></a></td>
+				<td><a class='activate btn btn-small btn-secondary' id='$pid' href='".URL."dashboard/reviewUpload' ><span>review</span></a></td>
 				<td><a class='edit btn btn-small btn-secondary' href=''><span>edit</span></a><a class='save btn btn-small btn-secondary' href='' style='display: none' ><span>save</span></a></td>
 			</tr>
 			";
@@ -79,9 +78,9 @@ function displayMetaData(){
 				<div class="masthead-pad">
 					<div class="masthead-text">
 						<h2>Uploads Center</h2>
-						<p>
+						<!--p>
 							Put text here ...
-						</p>
+						</p-->
 					</div> <!-- /.masthead-text -->
 				</div>
 			</div> <!-- /.container -->	
@@ -251,7 +250,7 @@ function displayMetaData(){
 			    console.log(jqXHR.status);
 			});
 		
-		});		
+		});	
 	 });
 	</script>
 

@@ -128,9 +128,7 @@ class Mailer{
 			return true;
 		}		
 	}
-};
-
-/* Initialize mailer object */
-$mailer = new Mailer;
- 
-
+	
+	
+	/**
+	* contac

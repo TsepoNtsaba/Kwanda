@@ -143,6 +143,55 @@ class UploadModel{
 		}
 	}
 	
+		/**
+	* Upload file and its metadata
+	*/
+	public function uploadReview(){
+		global $session, $form, $mailer, $database;
+		
+		$pid = $_POST["pid"];
+		$company = $_POST["company"];
+		$reputationvariable = $_POST["reputationvariable"];
+		$rating = $_POST["rating"];
+		$businessportfolio = $_POST["businessportfolio"];
+		$sponsorship = $_POST["sponsorship"];
+		$spokesperson = $_POST["spokesperson"];
+		$factorheadline = $_POST["factorheadline"];
+		$factorvisual = $_POST["factorvisual"];
+		$factorhighlight = $_POST["factorhighlight"];
+		
+		$q = "UPDATE meta_data SET company = '$company',reputation = '$reputationvariable',rating = '$rating',
+		business = '$businessportfolio',sponsor = '$sponsorship',spokesperson = '$spokesperson',factorheadline = '$factorheadline',
+		factorvisual = '$factorvisual',factorhighlight = '$factorhighlight', reviewed='1'
+		WHERE pid = '$pid'";
+			
+		$result = $database->query($q);
+		
+		// Upload meta-data successful
+		if($result == 0){
+			/* Get email of user */
+			//$userinfo = $database->getUserInfo($client);
+			//$email  = $userinfo['email'];
+			
+			/* Attempt to send the email notification */
+			//if($mailer->sendNotification($client, $email)){
+				return json_encode(Array("response" => "true", "msg" => "Upload Successful, notification has been sent to "));
+			//}
+		}
+		
+		// Error found with form
+		else if($result == 1){
+			$_SESSION['value_array'] = $_POST;
+			$_SESSION['error_array'] = $form->getErrorArray();
+			return json_encode(Array("response" => "false", "msg" => "Upload Failed due to Form errors"));
+		}
+		
+		// Upload meta-data attempt failed
+		else if($result == 2){
+			return json_encode(Array("response" => "false", "msg" => "Upload Failed! Could not add meta-data to database"));
+		}
+	}
+	
 	/**
 	* Upload file and its metadata
 	*/
@@ -235,6 +284,44 @@ class UploadModel{
 		// Upload meta-data successful
 		if($result == 0){
 			return json_encode(Array("response" => "true", "msg" => "Upload Successful"));
+		}
+		
+		// Error found with form
+		else if($result == 1){
+			$_SESSION['value_array'] = $_POST;
+			$_SESSION['error_array'] = $form->getErrorArray();
+			return json_encode(Array("response" => "false", "msg" => "Upload Failed due to Form errors"));
+		}
+		
+		// Upload meta-data attempt failed
+		else if($result == 2){
+			return json_encode(Array("response" => "false", "msg" => "Upload Failed! Could not add meta-data to database"));
+		}
+	}
+	
+	/**
+	* Upload file and its metadata
+	*/
+	public function contactAdmins(){
+		global $session, $form, $mailer, $database;
+		
+		$name = $_POST["name"];
+		$email = $_POST["email"];
+		$subject = $_POST["subject"];
+		$message = $_POST["message"];
+		
+		$mailer->contactAdmins($name, $email, $subject, $message);
+		
+		// Upload meta-data successful
+		if($result == 0){
+			/* Get email of user */
+			//$userinfo = $database->getUserInfo($client);
+			//$email  = $userinfo['email'];
+			
+			/* Attempt to send the email notification */
+			//if($mailer->sendNotification($client, $email)){
+				return json_encode(Array("response" => "true", "msg" => "Upload Successful, notification has been sent to "));
+			//}
 		}
 		
 		// Error found with form

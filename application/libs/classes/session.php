@@ -13,6 +13,7 @@
 require("application/libs/classes/database.php");
 require("application/libs/classes/mailer.php");
 require("application/libs/classes/form.php");
+require("application/libs/classes/PHPExcelClass/PHPExcel.php");
 
 class Session{
 	var $username;     //Username given on sign-up
@@ -23,6 +24,7 @@ class Session{
 	var $userinfo = array();  //The array holding all user info
 	var $url;          //The page url current being viewed
 	var $referrer;     //Last recorded site page viewed
+	var $pid;     //upload to be reviewed
 	/**
 	* Note: referrer should really only be considered the actual
 	* page referrer in process.php, any other time it may be

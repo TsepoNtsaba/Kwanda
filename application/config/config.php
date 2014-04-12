@@ -18,9 +18,9 @@ ini_set("display_errors", 1);
  * Configuration for: Project URL
  * Put your URL here, for local development "127.0.0.1" or "localhost:81" (plus sub-folder) is fine
  */
-define('URL', 'http://localhost/kwanda/');
-define('UPLOAD', '/var/www/kwanda/public/clientuploads/');
-define('MONITOR','http://localhost/kwanda/application/libs/monitor/');
+define('URL', 'http://localhost:81/kwanda/');
+define('UPLOAD', '/kwanda/public/clientuploads/');
+define('MONITOR','http://localhost:81/kwanda/application/libs/monitor/');
 
 /**
  * Configuration for: Database
@@ -30,10 +30,10 @@ define('DB_TYPE', 'mysql');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'php-mvc');
 define('DB_USER', 'root');
-define('DB_PASS', 'zieshumu');
+define('DB_PASS', '');
 
 /**
 * Configuration for: Dashboard theme
 */
-define('THEME', 'http://localhost/kwanda/public/theme/');
-define('RESOURCES', 'http://localhost/kwanda/public/');
+define('THEME', 'http://localhost:81/kwanda/public/theme/');
+define('RESOURCES', 'http://localhost:81/kwanda/public/');

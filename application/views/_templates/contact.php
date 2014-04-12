@@ -44,13 +44,13 @@ global $session, $form;
 					<div class="span6 offset3" style="text-align: center">
 						<div style="width: 550px; margin:0;" class="account-container register stacked">
 							<div class="content clearfix">
-								<form id="broadcastForm" action='<?php echo URL; ?>dashboard/uploadBroadcast' method="post" enctype="multipart/form-data">
+								<form id="broadcastForm" action='<?php echo URL; ?>dashboard/contactAdmins' method="post" enctype="multipart/form-data">
 									<div class="login-fields">
 										<table class="">
 											<tr class="detail"><td class="inputLabel">Name:</td><td class="inputHolder"><input type="text" name="name" id="name" placeholder="Name" value="<?php echo $form->value("name"); ?>" required /><?php echo $form->error("name"); ?></td></tr>
 											<tr class="detail"><td class="inputLabel">Email:</td><td class="inputHolder"><input type="email" name="email" id="email" placeholder="Email" required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" title="Email example: a@b.co" value="<?php echo $form->value("email"); ?>" /><?php echo $form->error("email"); ?></td></tr>
 											<tr class="detail"><td class="inputLabel">Subject:</td><td class="inputHolder"><input type="text" name="subject" id="subject" placeholder="Subject" value="<?php echo $form->value("subject"); ?>" required /><?php echo $form->error("subject"); ?></td></tr>
-											<tr class="detail"><td class="inputLabel">Message:</td><td class="inputHolder"><textarea style="width:310px;" name="message" id="message" maxlength="500" required /><?php echo $form->value("articletext"); ?></textarea><?php echo $form->error("message"); ?></td></tr>
+											<tr class="detail"><td class="inputLabel">Message:</td><td class="inputHolder"><textarea style="width:310px;" name="message" id="message" maxlength="666" required /><?php echo $form->value("articletext"); ?></textarea><?php echo $form->error("message"); ?></td></tr>
 										</table><br/>
 										<div class="login-actions">
 											<input type="hidden" name="MAX_FILE_SIZE" value="2147483648" />

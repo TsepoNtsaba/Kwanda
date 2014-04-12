@@ -1,9 +1,9 @@
 <style>
 	#broadcastBar, pressBar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
 	#broadcastPercent, #pressPercent { position:relative; display:inline-block; top:3px; left:48%; }
-	.checkbx
+	input [type='checkbox']
 	{
-		width: 15px;
+		width: 15px !important;
 	}
 </style>
 <?php
@@ -67,115 +67,103 @@ global $session, $form;
 					
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#searcharticle" data-toggle="tab">Search Article</a></li>
-						<li><a href="#generatereports" data-toggle="tab">Generate Reports</a></li>
+						<li class="active"><a href="#press" data-toggle="tab">Search Article</a></li>
+						<li><a href="#broadcast" data-toggle="tab">Generate Report</a></li>
 					</ul>
-		
+					
 					<!-- Tab panes -->
 					<div class="tab-content">
-						<div class="tab-pane fade in active" id="searcharticle">
+						<div class="tab-pane fade in active" id="press">
 							<h2 style="margin: 0;">Search Article</h2>
 							
-							<div class="span6 offset3" style="text-align: center">
+							<div class="span6 offset3" style="text-align: center; margin-bottom: 30px;">
 								<div style="width: 550px; margin:0;" class="account-container register stacked">
 									<div class="content clearfix">
-										<form id="pressForm" action='<?php echo URL; ?>dashboard/uploadPress' method="post" enctype="multipart/form-data">
+										<form id="frmSearchArticle" method="post" enctype="multipart/form-data">
 											<div class="login-fields">
 												<table class="">
 													<tr class="detail"><td class="inputLabel">Select Client:</td><td class="inputHolder">
 														<select style="width:323px;" id="client" name="client" value="<?php echo $form->value("client"); ?>" required >
-															<!--option>ABSA</option>
-															<option>FNB</option-->
+															<option>ABSA</option>
+															<option>FNB</option>
 															<?php displayClients(); ?>
 														</select><?php echo $form->error("client"); ?>
 													</td></tr>
-													<tr class="detail"><td class="inputLabel">From Date:</td><td class="inputHolder"><input type="date" name="fromdate" id="fromdate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("fromdate"); ?>" /><?php echo $form->error("fromdate"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">To Date:</td><td class="inputHolder"><input type="date" name="todate" id="todate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("todate"); ?>" /><?php echo $form->error("todate"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">From Date:</td><td class="inputHolder"><input type="date" name="fromdate" id="fromdate" pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("fromdate"); ?>" /><?php echo $form->error("fromdate"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">To Date:</td><td class="inputHolder"><input type="date" name="todate" id="todate" pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("todate"); ?>" /><?php echo $form->error("todate"); ?></td></tr>
 													
-													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" value="reviewedOnly" required />Reviewed Only</td></tr>
-													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" value="notReviewed" required />Not Reviewed</td></tr>
+													<tr class="detail"><td class="inputLabel">Reviewed Only</td><td class="inputHolder"><input type="checkbox" name="reviewedOnly" id="reviewedOnly" value="true" style="width: 50px !important;" /></td></tr>
+													<tr class="detail"><td class="inputLabel">Not Reviewed</td><td class="inputHolder"><input type="checkbox" name="notReviewed" id="notReviewed" value="true" style="width: 50px !important;" /></td></tr>
 													
 												</table>
-											
+												<br />
 												<div class="login-actions">
 													<input type="hidden" name="MAX_FILE_SIZE" value="2147483648" />
 													<input class="btn btn-large btn-secondary" id='submit'  type='submit' name='submit' value='Search' multiple />
+													<br/>
+													<img src="<?php echo RESOURCES; ?>img/loading.gif" class="loadingImg loadingImg1" />
 												</div>
 											</div><!--login fields-->
 										</form>
 									</div><!-- /.content clearfix -->
 							
-									<div id="pressProgress" class="progress progress-striped">
-										<div id="pressBar" class="bar"></div> <!-- /.bar -->
-										<div id="pressPercent">0%</div >
-									</div> <!-- /.progress -->
 									<br/>
-									<div id="pressMessage"></div>
-								
 								</div><!-- /.account-container register stacked -->
 							</div><!-- /.span6 -->
-							
+							<br/><div id="pressMessage"></div>
 						</div> <!-- /.tab-pane -->
 						
-						<!-- generatereports tab -->
-						<div class="tab-pane fade" id="generatereports">
+						<!-- Broadcast tab -->
+						<div class="tab-pane fade" id="broadcast">
 							<h2 style="margin: 0;">Generate Reports</h2>
 							
 							<div class="span6 offset3" style="text-align: center">
 								<div style="width: 550px; margin:0;" class="account-container register stacked">
 									<div class="content clearfix">
-										<form id="pressForm" action='<?php echo URL; ?>dashboard/uploadPress' method="post" enctype="multipart/form-data">
+										<form id="frmGenerateReports" action='<?php echo URL; ?>dashboard/getGeneratedReports' method="post" enctype="multipart/form-data">
 											<div class="login-fields">
 												<table class="">
 													<tr class="detail"><td class="inputLabel">Select Client:</td><td class="inputHolder">
 														<select style="width:323px;" id="client" name="client" value="<?php echo $form->value("client"); ?>" required >
-															<!--option>ABSA</option>
-															<option>FNB</option-->
+															<option>ABSA</option>
+															<option>FNB</option>
 															<?php displayClients(); ?>
 														</select><?php echo $form->error("client"); ?>
 													</td></tr>
-													<tr class="detail"><td class="inputLabel">From Date:</td><td class="inputHolder"><input type="date" name="fromdate" id="fromdate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("fromdate"); ?>" /><?php echo $form->error("fromdate"); ?></td></tr>
-													<tr class="detail"><td class="inputLabel">To Date:</td><td class="inputHolder"><input type="date" name="todate" id="todate" required pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("todate"); ?>" /><?php echo $form->error("todate"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">From Date:</td><td class="inputHolder"><input type="date" name="fromdate" id="fromdate" pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("fromdate"); ?>" /><?php echo $form->error("fromdate"); ?></td></tr>
+													<tr class="detail"><td class="inputLabel">To Date:</td><td class="inputHolder"><input type="date" name="todate" id="todate" pattern="^([0-2][0-9][0-9][0-9]/(0[1-9]|1[0-2])/([0-2][0-9]|3[0-1]))$" value="<?php echo $form->value("todate"); ?>" /><?php echo $form->error("todate"); ?></td></tr>
 													
-													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" class="checkbx" value="reviewedOnly" required />Reviewed Only</td></tr>
-													<tr class="detail"><td class="inputLabel"></td><td class="inputHolder"><input type="checkbox" name="reviewed" class="checkbx" value="notReviewed" required />Not Reviewed</td></tr>
+													<tr class="detail"><td class="inputLabel">Reviewed Only</td><td class="inputHolder"><input type="checkbox" name="reviewedOnly" id="reviewedOnly" value="true" style="width: 50px !important;" /></td></tr>
+													<tr class="detail"><td class="inputLabel">Not Reviewed</td><td class="inputHolder"><input type="checkbox" name="notReviewed" id="notReviewed" value="true" style="width: 50px !important;" /></td></tr>
 													
 												</table>
-											
-												<div class="login-actions">
-													<input type="hidden" name="MAX_FILE_SIZE" value="2147483648" />
-													<input class="btn btn-large btn-secondary" id='submit'  type='submit' name='submit' value='Search' multiple />
-												</div>
+												<br />
 											</div><!--login fields-->
+											<div class="login-actions">
+												<input type="hidden" name="MAX_FILE_SIZE" value="2147483648" />
+												<input class="btn btn-large btn-secondary" id='submit'  type='submit' name='submit' value='Search' multiple />
+												<br/>
+												<img src="<?php echo RESOURCES; ?>img/loading.gif" class="loadingImg loadingImg2" />
+											</div>
 										</form>
 									</div><!-- /.content clearfix -->
-							
-									<div id="pressProgress" class="progress progress-striped">
-										<div id="pressBar" class="bar"></div> <!-- /.bar -->
-										<div id="pressPercent">0%</div >
-									</div> <!-- /.progress -->
+									
 									<br/>
 									<div id="pressMessage"></div>
 								
 								</div><!-- /.account-container register stacked -->
-								
-								<h2 style="margin: 0;">List Reports</h2>
-								<div style="width: 550px; margin:0;" class="account-container register stacked">
-									<div class="content clearfix">
-										List
-									</div><!-- /.content clearfix -->
-									
-									<div id="broadcastProgress" class="progress progress-striped">
-										<div id="broadcastBar" class="bar"></div> <!-- /.bar -->
-										<div id="broadcastPercent">0%</div >
-									</div> <!-- /.progress -->
-									<br/>
-									<div id="broadcastMessage"></div>
-								
-								</div><!-- /.account-container register stacked -->
+								<br />
+								<h2 style="margin: 0;">List of Reports</h2>
+								<div id="reportsList">
+								</div><!-- /.List reports -->
+					
 							</div><!-- /.span6 -->						
+							
 						</div> <!-- /.tab-pane -->
+					
 					</div> <!-- /.tab-content -->
+					
+					
 					
 				</div> <!-- /.row -->
 			</div> <!-- /.container -->
@@ -192,7 +180,7 @@ global $session, $form;
 	<script>
 		$(function(){
 			Theme.init ();
-			$("li#upload").addClass("active");
+			$("li#generatereports").addClass("active");
 			
 			$("option.clients").each(function(){
 				$(this).text(function(i, oldText){
@@ -298,78 +286,295 @@ global $session, $form;
 	</script>
 	
 	<script>
-		//Uploader Form uploading script
-		$(document).ready(function(){
-			var options = {
-				beforeSend: function(){
-					$("#pressProgress").show();
-					//clear everything
-					$("#pressBar").width('0%');
-					$("#pressMessage").html("");
-					$("#pressPercent").html("0%");
-				}, uploadProgress: function(event, position, total, percentComplete){
-					$("#pressBar").width(percentComplete+'%');
-					$("#pressPercent").html(percentComplete+'%');
-				}, success: function(){
-					$("#pressBar").width('100%');
-					$("#pressPercent").html('100%');
-				}, complete: function(response){
-					$("#pressMessage").html("<font color='green'>"+response.responseText+"</font>");
-					$.msgAlert ({
-						type: "success"
-						, title: "Succesful"
-						, text: "The File and Metadata were uploaded successfully."
+			$(function() { //Code segment uploads file to the server
+			    $('#frmSearchArticle').submit(function(e) {
+				e.preventDefault();
+				data = new FormData($('#frmSearchArticle')[0]);
+				console.log('Submitting');
+				$(".loadingImg1").fadeIn("slow");
+				
+				$.ajax({
+				    type: 'POST',
+				    url: '<?php echo URL; ?>dashboard/searchArticle',
+				    data: data,
+				    cache: false,
+				    contentType: false,
+				    processData: false,
+				    success:function(response){
+					$("#pressMessage").html(response.msg);
+					
+				    },beforeSend: function(){
+						$("#pressProgress").show();
+						//clear everything
+						$("#pressBar").width('0%');
+						$("#pressMessage").html("");
+						$("#pressPercent").html("0%");
+					}, uploadProgress: function(event, position, total, percentComplete){
+						$("#pressBar").width(percentComplete+'%');
+						$("#pressPercent").html(percentComplete+'%');
+					},complete: function(response){
+						appendTableHandlers();
+						$(".loadingImg1").fadeOut("slow");
+						/*$.msgAlert ({
+							type: "success"
+							, title: "Succesful"
+							, text: "The data was successfully retrieved."
+						});*/
+						$("#frmSearchArticle")[0].reset();
+					}, error: function(){
+						$("#pressMessage").html("<font color='red'> ERROR: unable to upload files</font>");
+						$.msgAlert ({
+							type: "error"
+							, title: "Error"
+							, text: "An Error occured while trying to upload the File and Metadata"
+						});
+					}
+				}).done(function(data) {
+				    console.log(data);
+				}).fail(function(jqXHR,status, errorThrown) {
+				    console.log(errorThrown);
+				    console.log(jqXHR.responseText);
+				    console.log(jqXHR.status);
+				});
+			    });
+			    
+			    refreshList(); //this function populates the list table
+			    
+			    $('#frmGenerateReports').submit(function(e) {
+				e.preventDefault();
+				data = new FormData($('#frmGenerateReports')[0]);
+				console.log('Submitting');
+				$(".loadingImg2").fadeIn("slow");
+				$.ajax({
+				    type: 'POST',
+				    url: '<?php echo URL; ?>dashboard/getGeneratedReports',
+				    data: data,
+				    cache: false,
+				    contentType: false,
+				    processData: false,
+				    success:function(response){
+					
+				    },beforeSend: function(){
+						$("#pressProgress").show();
+						//clear everything
+						$("#pressBar").width('0%');
+						$("#pressMessage").html("");
+						$("#pressPercent").html("0%");
+					}, uploadProgress: function(event, position, total, percentComplete){
+						$("#pressBar").width(percentComplete+'%');
+						$("#pressPercent").html(percentComplete+'%');
+					},complete: function(response){
+						//alert("Refreshing List");
+						refreshList();
+						$(".loadingImg2").fadeOut("slow");
+					}, error: function(){
+						/*
+						$("#pressMessage").html("<font color='red'> ERROR: unable to upload files</font>");
+						$.msgAlert ({
+							type: "error"
+							, title: "Error"
+							, text: "An Error occured while trying to generate reports"
+						});
+						*/
+					}
+				}).done(function(data) {
+				    console.log(data);
+				}).fail(function(jqXHR,status, errorThrown) {
+				    console.log(errorThrown);
+				    console.log(jqXHR.responseText);
+				    console.log(jqXHR.status);
+				});
+			    });
+			    
+			    function refreshList()
+			    {
+				$.ajax({
+				    type: 'POST',
+				    url: '<?php echo URL; ?>dashboard/getReportsList',
+				    cache: false,
+				    contentType: false,
+				    processData: false,
+				    success:function(response){
+					$("#reportsList").html(response.msg);
+				    },beforeSend: function(){
+						$("#pressProgress").show();
+						//clear everything
+						$("#pressBar").width('0%');
+						$("#pressMessage").html("");
+						$("#pressPercent").html("0%");
+					}, uploadProgress: function(event, position, total, percentComplete){
+						$("#pressBar").width(percentComplete+'%');
+						$("#pressPercent").html(percentComplete+'%');
+					},complete: function(response){
+						/*$.msgAlert ({
+							type: "success"
+							, title: "Succesful"
+							, text: "The list was successfully retrieved."
+						});*/
+						$("#frmSearchArticle")[0].reset();
+					}, error: function(){
+						$("#pressMessage").html("<font color='red'> ERROR: unable to upload files</font>");
+						$.msgAlert ({
+							type: "error"
+							, title: "Error"
+							, text: "An Error occured while trying to retrieve reports list"
+						});
+					}
+				}).done(function(data) {
+				    console.log(data);
+				}).fail(function(jqXHR,status, errorThrown) {
+				    console.log(errorThrown);
+				    console.log(jqXHR.responseText);
+				    console.log(jqXHR.status);
+				});
+			    } 
+			    
+			    function appendTableHandlers()
+			    {
+				//alert("appending Handlers");
+				//Code that edits the data that is retrieved
+				$("a.edit").click(function(e){
+					e.preventDefault();
+					//alert("XXXXXXXXXXXXXXX");
+					$(this).parent().parent().find(".fieldText").fadeOut(200);
+					$(this).parent().parent().find(".fieldEdit").delay(200).fadeIn(600);
+					$(this).fadeOut(200);
+					$(this).parent().find(".save").delay(199).fadeIn(200);
+				});
+				
+				$("a.save").click(function(e){
+					e.preventDefault();
+					//"<tr><td><span class='fieldText txtUsername'> $uname</span><input type='text' value='$uname'  class='fieldEdit tbxUsername' style='display: none' /></td><td><span class='fieldText txtLevel' >$ulevel</span><input type='text' value='$ulevel'  class='fieldEdit tbxLevel' style='display: none' /></td><td><span class='fieldText txtEmail' >$email</span><input type='text' value='$email' class='fieldEdit tbxEmail' style='display: none' /></td><td>$time</td><td><span class='fieldText txtGroup' >$parent</span><input type='text' value='$parent' class='fieldEdit tbxGroup' style='display: none' /></td><td><a class='del btn btn-small btn-secondary' id='$uname' href='adminprocess.php'><span>delete</span></a><br /><br /><a class='ban btn btn-small btn-secondary' id='$uname' href='adminprocess.php'><span>ban</span></a><br /><br /><a class='edit btn btn-small btn-secondary' href=''><span>edit</span></a><a class='save btn btn-small btn-secondary' href='' style='display: none' ><span>save</span></a></td></tr>";
+					var jsonObj = {
+						pid: $(this).parent().parent().find(".tbxpid").val(),
+						medianame: $(this).parent().parent().find(".tbxmedianame").val(),
+						headline: $(this).parent().parent().find(".tbxheadline").val(),
+						publicationdate: $(this).parent().parent().find(".tbxpublicationdate").val(),
+						mediatype: $(this).parent().parent().find(".tbxmediatype").val(),
+						articletext: $(this).parent().parent().find(".tbxarticletext").val()
+					};
+					
+					$(this).parent().parent().find(".txtpid").text(jsonObj.pid);
+					$(this).parent().parent().find(".txtmedianame").text(jsonObj.medianame);
+					$(this).parent().parent().find(".txtheadline").text(jsonObj.headline);
+					$(this).parent().parent().find(".txtpublicationdate").text(jsonObj.publicationdate);
+					$(this).parent().parent().find(".txtmediatype").text(jsonObj.mediatype);
+					$(this).parent().parent().find(".txtarticletext").text(jsonObj.articletext);
+					
+					$(this).parent().parent().find(".fieldEdit").fadeOut(200);
+					$(this).parent().parent().find(".fieldText").delay(200).fadeIn(600);
+					$(this).fadeOut(200);
+					$(this).parent().find(".edit").delay(200).fadeIn(200);
+					
+					
+					$.ajax({
+						type: 'POST',
+						url: '<?php echo URL; ?>dashboard/editData',
+						data: jsonObj,
+						cache: false,	
+						success:function(result){
+							if(result.response == "true"){
+								$.msgAlert ({
+									type: "success"
+									, title: "Succesful"
+									, text: "The data  was successfully edited."
+									//, success: location.reload()
+								});  
+							}else{
+								$.msgAlert ({
+									type: "error"
+									, title: "Error"
+									, text: "Error in editing the data , please check the frequently asked questions or contact support. Sorry for the inconvenience "
+									/*, success: location.reload()*/
+								});
+							}
+						},
+						error:function(error){
+							$.msgAlert ({
+								type: "error"
+								, title: "Error"
+								, text: "Error in editing the data, please check the frequently asked questions or contact support. Sorry for the inconvenience "
+								/*, success: location.reload()*/
+							});
+						}
+					}).done(function(data) {
+					    console.log(data);
+					}).fail(function(jqXHR,status, errorThrown) {
+					    console.log(errorThrown);
+					    console.log(jqXHR.responseText);
+					    console.log(jqXHR.status);
 					});
-					$("#pressForm")[0].reset();
-				}, error: function(){
-					$("#pressMessage").html("<font color='red'> ERROR: unable to upload files</font>");
-					$.msgAlert ({
-						type: "error"
-						, title: "Error"
-						, text: "An Error occured while trying to upload the File and Metadata"
+				
+				});
+				
+				//Code that deletes the data when delete is pressed for a particular field
+				$("a.del").click(function(e) {
+					e.preventDefault();
+					
+					var id = $(this).attr("id");
+					var jsonObj = {
+						pid:id
+					};
+					
+					$.msgbox("Are you sure that you want to this data?", {
+					  type : 'confirm',
+					  buttons : [
+					    {type: 'submit', value:'Yes'},
+					    {type: 'submit', value:'No'}
+					  ]
+					}, function(buttonPressed) {
+						if(buttonPressed == 'Yes')
+						{
+							$.ajax({
+							    type: 'POST',
+							    url: '<?php echo URL; ?>dashboard/deleteData',
+							    data: jsonObj,
+							    cache: false,	
+							    success:function(result){
+								//alert(result.msg);
+								if(result.response == "true"){
+									$("#"+id).parent().parent().fadeOut("slow");
+									
+									$.msgAlert ({
+										type: "success"
+										, title: "Succesful"
+										, text: "The data was successfully deleted."
+										, success: location.reload()
+									});
+								}else{
+									$.msgAlert ({
+										type: "error"
+										, title: "Error"
+										, text: "Error in deleting the data, please check the frequently asked questions or contact support. Sorry for the inconvenience."
+										/*, success: location.reload()*/
+									});
+								}
+							    },
+							    error:function(error){
+								//alert(error.error);
+								$.msgAlert ({
+									type: "error"
+									, title: "Error"
+									, text: "Error in deleting data, please check the frequently asked questions or contact support. Sorry for the inconvenience "
+									/*, success: location.reload()*/
+									});
+							    }
+							}).done(function(data) {
+							    console.log(data);
+							}).fail(function(jqXHR,status, errorThrown) {
+							    console.log(errorThrown);
+							    console.log(jqXHR.responseText);
+							    console.log(jqXHR.status);
+							});
+						}
+						else if(buttonPressed == 'No')
+						{
+							//window.location.href = "./";
+						}
+						
 					});
-				}
-			}; 
-			
-			$("#pressForm").ajaxForm(options);
-		});
-	</script>
+				});			    
+			    }
+			});
 	
-	<script>
-		//Uploader Form uploading script
-		$(document).ready(function(){
-			var options = {
-				beforeSend: function(){
-					$("#broadcastProgress").show();
-					//clear everything
-					$("#broadcastBar").width('0%');
-					$("#broadcastMessage").html("");
-					$("#broadcastPercent").html("0%");
-				}, uploadProgress: function(event, position, total, percentComplete){
-					$("#broadcastBar").width(percentComplete+'%');
-					$("#broadcastPercent").html(percentComplete+'%');
-				}, success: function(){
-					$("#broadcastBar").width('100%');
-					$("#broadcastPercent").html('100%');
-				}, complete: function(response){
-					$("#broadcastMessage").html("<font color='green'>"+response.responseText+"</font>");
-					$.msgAlert ({
-						type: "success"
-						, title: "Succesful"
-						, text: "The File and Metadata were uploaded successfully."
-					});
-					$("#broadcastForm")[0].reset();
-				}, error: function(){
-					$("#broadcastMessage").html("<font color='red'> ERROR: unable to upload files</font>");
-					$.msgAlert ({
-						type: "error"
-						, title: "Error"
-						, text: "An Error occured while trying to upload the File and Metadata"
-					});
-				}
-			}; 
-			
-			$("#broadcastForm").ajaxForm(options);
-		});
-
 	</script>
