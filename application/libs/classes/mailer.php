@@ -131,4 +131,39 @@ class Mailer{
 	
 	
 	/**
-	* contac
+	* contactAdmins - Sends email to the 
+	* to the user's email address that was specified at
+	* upload.
+	*/
+	public function contactAdmins($name, $email, $subject, $message)
+	{
+		global $php_mailer;
+	     
+		$php_mailer->CharSet = "utf-8";
+		
+		$php_mailer->AddAddress("kabelokwasi@gmail.com");
+		$php_mailer->AddAddress("threalmrntsaba@gmail.com");
+		$php_mailer->AddAddress("mp.mello5@gmail.com");
+		
+		$php_mailer->Subject  = "Kwanda Media Portal Contacting Developers: ".$subject;
+		
+		$php_mailer->From = $email;
+		
+		$link = URL;
+		
+		$php_mailer->Body = $message;
+					
+		if(!$php_mailer->Send()){
+			//echo 'Message was not sent.';
+			//echo 'Mailer error: ' . $mailer->ErrorInfo;
+			return false;
+		}else{
+			//echo 'Message has been sent.';
+			return true;
+		}		
+	}
+	
+	/**
+	* contactAd
+	*/
+}
